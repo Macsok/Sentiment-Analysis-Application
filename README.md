@@ -1,2 +1,2 @@
 # SentimentProject
-Sentiment analysing application project.
+Sentiment analysing web application project.
