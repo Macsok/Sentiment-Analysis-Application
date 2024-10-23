@@ -2,7 +2,7 @@ import googleapiclient.discovery
 import csv
 
 
-API_KEY = 'AIzaSyA-MaUCPX-ugyc4hTP8OHW-_dpN9k42KFk'  # API key for Youtube Data API v3
+API_KEY = 'API_KEY'  # API key for Youtube Data API v3
 VIDEO_ID = 'dQw4w9WgXcQ'  # yt video ID
 
 
