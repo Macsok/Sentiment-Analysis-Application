@@ -6,5 +6,5 @@ Sentiment analysing web application project.
 
 # Running
 ```sh
-python main.py
+python web/main.py
 ```
