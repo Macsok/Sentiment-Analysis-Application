@@ -5,6 +5,8 @@ app = Flask(__name__)
 def calculate_value(a): return 2*a 
 
 
+@app.route("/web/static")
+
 @app.route("/home")
 @app.route("/")
 def home():
@@ -14,6 +16,26 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+
+@app.route("/index")
+def index():
+    return render_template("index.html")
+
+@app.route("/allcommentsreview")
+def allcommentsreview():
+    return render_template("allcommentsreview.html")
+@app.route("/singlereview")
+def singlereview():
+    return render_template("singlereview.html")
+@app.route("/wordreview")
+def wordreview():
+    return render_template("wordreview.html")
+
+@app.route("/logo")
+def logo():
+    return render_template("logo.html")
 
 
 @app.route("/calc", methods=['GET', 'POST'])
