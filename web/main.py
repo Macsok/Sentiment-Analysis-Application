@@ -1,10 +1,14 @@
-from flask import Flask, render_template,request    
+from flask import Flask, render_template, request
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../scripts'))
+import analyses
+
 
 app = Flask(__name__)
 
-def calculate_value(a): return 2*a 
 
-
+# Landing page
 @app.route("/home")
 @app.route("/")
 def home():
@@ -16,13 +20,37 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/calc", methods=['GET', 'POST'])
-def calc():
-    result = None
+#------------------------------------------------------------
+# Testing
+#------------------------------------------------------------
+
+# Base form of GET and POST function
+"""
+@app.route('/form', methods=['GET', 'POST'])
+def baseForm():
     if request.method == 'POST':
-        input_value = float(request.form['input_value'])
-        result = calculate_value(input_value)
-    return render_template("calc.html", result=result)
+        # Retrieve data from a form
+        user_data = request.form['user_input']
+        # Render site with results
+        return render_template('form.html', user_data=user_data)
+    # Display form site using GET method
+    return render_template('form.html')
+"""
+#------------------------------------------------------------
+
+@app.route('/script', methods=['GET', 'POST'])
+def baseForm():
+    if request.method == 'POST':
+        # Retrieve data from a form
+        user_data = request.form['user_input']
+        print(user_data)
+        # Render site with results
+        return render_template('script.html', user_data=analyses.analyseText(user_data))
+    # Display form site using GET method
+    return render_template('script.html')
+
+
+#------------------------------------------------------------
 
 
 if __name__ == "__main__":

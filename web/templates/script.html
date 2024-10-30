@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz z Flask</title>
+</head>
+<body>
+    <h1>Wprowadź dane</h1>
+    <form method="POST">
+        <label for="user_input">Wpisz coś:</label>
+        <input type="text" id="user_input" name="user_input" required>
+        <button type="submit">Wyślij</button>
+    </form>
+
+    {% if user_data %}
+        <h2>Twoje dane:</h2>
+        <p>{{ user_data }}</p>
+    {% endif %}
+</body>
+</html>
