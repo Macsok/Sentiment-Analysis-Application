@@ -1,14 +1,12 @@
 import googleapiclient.discovery
 import csv
-
+import re  # Import the regular expressions module
 
 API_KEY = 'API_KEY'  # API key for Youtube Data API v3
 VIDEO_ID = 'dQw4w9WgXcQ'  # yt video ID
 
-
-def get_comments(video_id, api_key, max_pages=5):
+def get_comments(video_id, api_key=API_KEY, max_pages=5):
     """Function to fetch comments from a YouTube video using the API."""
-
     # Build the YouTube API client
     youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=api_key)
 
@@ -40,25 +38,29 @@ def get_comments(video_id, api_key, max_pages=5):
         if not page_token:
             break  # Exit the loop if there are no more pages
 
-    save_comments_to_csv(comments)  # Save the comments to a CSV file
 
+    # Uncomment the line below to save the comments to a CSV file
+    # save_comments_to_csv(comments)  # Save the comments to a CSV file
+    return comments
 
 def clean_data(data):
-    #Cleaning data by removing extra white spaces and Unicode characters.
+    # Cleaning data by removing extra white spaces and Unicode characters.
     if not data:
-        return ""
+        return None  # Return None if the data is empty or None
     cleaned_data = " ".join(data.split()).strip()
     cleaned_data = cleaned_data.encode("ascii", "ignore").decode("ascii")
-    return cleaned_data
+
+    # Regular expression to check for at least one alphabetical character
+    if re.search(r'[a-zA-Z]', cleaned_data):
+        return cleaned_data  # Return the cleaned data if it contains letters
+    return None  # Return None if it does not contain any letters
 
 def save_comments_to_csv(comments, filename="youtube_comments.csv"):
-    #Saving comments to csv file, by default youtube_comments.csv
+    # Saving comments to a CSV file, by default youtube_comments.csv
     with open(filename, 'w', newline='', encoding='utf-8') as f:
-        #Initializing field names for csv file
+        # Initializing field names for csv file
         writer = csv.DictWriter(f, fieldnames=['author', 'comment', 'like_count', 'published_at'])
         writer.writeheader()
         writer.writerows(comments)
 
-get_comments(VIDEO_ID, API_KEY)
-
-
+#get_comments(VIDEO_ID, API_KEY)
