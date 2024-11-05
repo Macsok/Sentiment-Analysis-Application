@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+	<h1>hello from single comment review	</h1>
+
+    <div id="word">
+		<form action="/singlereview" method="POST">
+			Enter the word you want to check
+			<br>
+			<input type="text" id="textinput" name="textinput" value="{{ textinput }}">
+			<br>
+			<input type="submit">
+		</form>
+	</div>
+
+    {% if score %}
+    <p>Your text is <span id="score" value="{{ score }}">{{ score }}</span> positive.</p>
+    {% endif %}
+
+	
+
+{% endblock %}

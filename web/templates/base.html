@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8" />
+	<title>Comment reviewer</title>
+	<meta name="description" content="none" />
+	<meta name="keywords" content="none, no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	
+	<link rel="stylesheet" href="{{ url_for('static',    filename='css/fontello.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static',    filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/base.css') }}">
+
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato:wght@200;400&display=swap" rel="stylesheet">
+
+    <script src="{{ url_for('static',    filename='js/jquery-3.7.1.min.js') }}"></script>
+
+    <script>
+
+        $(document).ready(function() {
+        var NavY = $('.nav').offset().top;
+         
+        var stickyNav = function(){
+        var ScrollY = $(window).scrollTop();
+              
+        if (ScrollY > NavY) { 
+            $('.nav').addClass('sticky');
+        } else {
+            $('.nav').removeClass('sticky'); 
+        }
+        };
+         
+        stickyNav();
+         
+        $(window).scroll(function() {
+            stickyNav();
+        });
+        });
+        
+    </script>
+    
+{% block head %}{% endblock %}
+</head>
+
+<body>
+
+    <header>
+        <div id="logobackground">    
+            <div id="logo">
+            
+                <a href="{{ url_for('home')}}" class="logolink">
+                    <i class=" icon-chat" id="icon-chat"></i>
+                    <h1 style="float: left;">Comment reviewer</h1>
+                    <div style="clear: both;"></div>
+                </a>
+        
+            </div>
+        </div>
+
+        <div class="nav">
+            <ol>
+                <li><a href="{{ url_for('home')}}" >Home</a></li>
+                <li style="width: 150px;"><a href="{{ url_for('review')}}" >Review</a>
+                    <ul>
+                        <li><a href="{{ url_for('wordreview')}}" >Single word</a></li>
+                        <li><a href="{{ url_for('singlereview')}}" >Single comment</a></li>
+                        <li><a href="{{ url_for('allcommentsreview')}}" >Site's comments</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('about')}}" >About</a></li>
+                <li><a href="{{ url_for('contact')}}" >Contact</a></li>
+                <li><a href="{{ url_for('contribute')}}" >Contribute</a></li>
+
+            </ol>
+        </div> 
+    </header>
+
+    <main>
+        <div id="container">
+            <div id="content">
+
+                {% block content %}{% endblock %}
+
+            </div>
+        </div>
+        
+    </main>
+
+    <footer>
+        <div id></div>
+
+        Comment reviewer &copy; 2024 Konrad, Maciej, Kuba
+
+    </footer>
+    
+</body>
