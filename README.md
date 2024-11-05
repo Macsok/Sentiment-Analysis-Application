@@ -4,7 +4,7 @@ Sentiment analysing web application project.
 # Download the repository
 Clone the repository:
 ```sh
-git clone https://github.com/Macsok/Exploratory-Data-Analysis
+git clone https://github.com/Macsok/Sentiment-Analysis-Application
 cd Exploratory-Data-Analysis
 ```
 
