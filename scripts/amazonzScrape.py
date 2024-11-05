@@ -101,7 +101,7 @@ async def extract_data(amazon_reviews_ratings, page) -> list:
 async def run(playwright, url) -> None:
     amazon_reviews_ratings = []
     while len(amazon_reviews_ratings) == 0:  # Initializing the browser and creating a new page
-        browser = await playwright.firefox.launch(headless=False)
+        browser = await playwright.firefox.launch(headless=True)
         context = await browser.new_context()
         page = await context.new_page()
 
