@@ -102,16 +102,19 @@ def baseForm():
 """
 #------------------------------------------------------------
 
-@app.route('/script', methods=['GET', 'POST'])
-def baseForm():
-    if request.method == 'POST':
-        # Retrieve data from a form
-        user_data = request.form['user_input']
-        print(user_data)
-        # Render site with results
-        return render_template('script.html', user_data=analyses.analyseText(user_data))
-    # Display form site using GET method
-    return render_template('script.html')
+import random
+from flask import jsonify
+
+@app.route('/fetch')
+def js_fetch():
+    return render_template('js-fetch.html')
+
+# Trasa dla danych słupków progresu
+@app.route('/progress')
+def get_progress():
+    # Generowanie losowych wartości progresu
+    progress_values = [random.randint(0, 100) for _ in range(3)]
+    return jsonify(progress_values)
 
 
 #------------------------------------------------------------
