@@ -37,30 +37,14 @@ body
     height: 24px;
 }
 
-#logo
-{
-    margin: 10px;
-    width: 1000px;
-    height: 40px;
-    padding: 20px 15px 10px 15px;
-    font-size: 25px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-align: left;
-    margin-bottom: 70px;
 
-}
 
 #back:hover
 {
     color: brown;
 }
 
-.logolink
-{
-    text-decoration: none;
-    color: #ffffff;
-}
+
 
 #back
 {

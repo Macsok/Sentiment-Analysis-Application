@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Flask Tutorial</title>
-      <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}">
-  </head>
-  <body>
-    {% extends "template.html" %}
-    {% block content %}
+{% extends 'base.html' %}
 
-    <h1> My First Try Using Flask! </h1>
-    <p> Flask is Fun </p>
-    <p> Simple POST and GET </p>
-    <p> index by wejść aktualnie do webUI </p>
+{% block head %}
+{% endblock %}
 
-    {% endblock %}
-  </body>
-</html>
+{% block content %}
+
+	<h1>hello from home	</h1>
+
+	
+
+{% endblock %}

@@ -1,0 +1,158 @@
+body{
+	background-image: url("img/background.png");
+    font-size: 20px;
+    margin: 0px !important;
+    color: #ffffff;
+}
+
+#logobackground{
+	width: 100%;
+	background-color: #151515;
+}
+
+#logo{
+    height: 40px;    
+	padding-bottom: 50px;
+	padding: 20px 20px 50px 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 390px;
+}
+
+.logolink
+{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#logo h1{
+	font-size: 25px;
+	text-align: justify;
+	padding-right: 20px;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+#icon-chat{
+	font-size: 55px; 
+	float: left; 
+	padding-right: 30px;
+	color: #008b8b;
+
+}
+
+.sticky
+{
+	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+	padding-bottom: 30px;
+}
+
+
+.nav{
+    width: 100%;
+	padding: 10px 0;
+	background-color: #008b8b;
+	text-align: center;
+    color: #ffffff;
+	border-top: 1px rgb(4, 82, 82);
+	border-bottom: 1px rgb(4, 82, 82);
+
+}
+
+#container{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #151515;
+	min-height: 70.7vh
+}
+
+#content{
+	margin: 20px;
+	font-weight: 200;
+	word-spacing: 3px;
+	line-height: 25px;
+}
+
+ol
+{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	font-size: 18px;
+	height: 35px;
+	line-height: 200%;
+	display: inline-block;
+}
+
+ol a
+{
+	color: #ffffff;
+	text-decoration: none;
+	display: block;
+}
+
+ol > li
+{
+	float: left;
+	height: 40px;
+	border-right: 1px dashed lightblue;
+	width: 150px;
+}
+
+ol > li:first-child
+{
+	border-left: 1px dashed #add8e6;
+}
+
+ol > li:hover
+{
+	background-color: #109b9b;
+}
+
+ol > li a:hover{
+	color: rgb(0, 25, 58);
+}
+
+ol > li > ul{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	height: 50px;
+	padding-top: 5px;
+	display: none;
+}
+
+ol > li:hover > ul{
+	display: block;
+}
+
+ol > li > ul > li{
+	background-color: #109b9b;
+	position: relative;
+	z-index: 100;
+	border-top: 1px dashed lightblue;
+}
+
+ol > li > ul > li:hover{
+	background-color: #008b8b;
+}
+
+ol > li > ul > li:hover > a{
+	color: rgb(0, 25, 58);
+}
+
+footer{
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #222222;
+	word-spacing: 5px;
+	font-size: 18px;
+}

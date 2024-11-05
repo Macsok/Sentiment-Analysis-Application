@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request    
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -29,13 +29,33 @@ def allcommentsreview():
 @app.route("/singlereview")
 def singlereview():
     return render_template("singlereview.html")
-@app.route("/wordreview")
+
+@app.route("/wordreview", methods=["GET", "POST"])
 def wordreview():
-    return render_template("wordreview.html")
+    if request.method == "POST":
+        text = request.form["textinput"]
+        print(text)
+        score = str(len(text)) + '%'
+        return render_template("wordreview.html", textinput=text, score=score)
+    else:
+        return render_template("wordreview.html")
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/contribute")
+def contribute():
+    return render_template("contribute.html")
 
 @app.route("/logo")
 def logo():
     return render_template("logo.html")
+
+@app.route("/review")
+def review():
+    return render_template("review.html")
 
 
 @app.route("/calc", methods=['GET', 'POST'])
