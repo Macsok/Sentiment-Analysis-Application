@@ -23,12 +23,25 @@ def about():
 def index():
     return render_template("index.html")
 
-@app.route("/allcommentsreview")
+@app.route("/allcommentsreview", methods=["GET", "POST"])
 def allcommentsreview():
-    return render_template("allcommentsreview.html")
-@app.route("/singlereview")
+    if request.method == "POST":
+        text = request.form["textinput"]
+        print(text)
+        score = str(len(text)) + '%'
+        return render_template("allcommentsreview.html", textinput=text, score=score)
+    else:
+        return render_template("allcommentsreview.html")
+
+@app.route("/singlereview", methods=["GET", "POST"])
 def singlereview():
-    return render_template("singlereview.html")
+    if request.method == "POST":
+        text = request.form["textinput"]
+        print(text)
+        score = str(len(text)) + '%'
+        return render_template("singlereview.html", textinput=text, score=score)
+    else:
+        return render_template("singlereview.html")
 
 @app.route("/wordreview", methods=["GET", "POST"])
 def wordreview():
