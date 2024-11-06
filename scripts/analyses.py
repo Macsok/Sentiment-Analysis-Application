@@ -31,13 +31,23 @@ def analyseText(text : str = '', translate : bool = True, skip_non_eng : bool = 
                 text = translator.translate(text, src=language, dest='en').text
             except:
                 return 2
+        # Scores for translated text
+        scores = sia.polarity_scores(text)
+        return scores['pos'], scores['neg'], scores['neu'], scores['compound'], text
         
     # Sentiment analysis
     scores = sia.polarity_scores(text)
     sentiment = 'Positive' if scores['compound'] > 0 else 'Negative' if scores['compound'] < 0 else 'Neutral'
 
     # Printing results -- only for testing
-    return f"\nAnalysed text: {text}\nSentiment: {sentiment}, Scores: {scores}\n"
+    # return f"\nAnalysed text: {text}\nSentiment: {sentiment}, Scores: {scores}\n"
+    return scores['pos'], scores['neg'], scores['neu'], scores['compound'], text
 
 
-# print(analyseText(str(input('enter text: ')), False, True))
+# print(analyseText(str(input('enter text: '))))
+
+
+def getSentiment(score) -> str:
+    """Returns sentiment of provided scores (positive/negative/neutral)"""
+    sentiment = 'positive' if score > 0 else 'negative' if score < 0 else 'neutral'
+    return sentiment
