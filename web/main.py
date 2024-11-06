@@ -42,8 +42,11 @@ def singlereview():
     if request.method == "POST":
         text = request.form["textinput"]
         print(text)
-        score = str(len(text)) + '%'
-        return render_template("singlereview.html", textinput=text, score=score)
+        scores = analyses.analyseText(text)
+        sentiment = analyses.getSentiment(scores[3])
+
+        return render_template("singlereview.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
+                               negative=scores[1]*100, neutral=scores[2]*100, text=scores[4])
     else:
         return render_template("singlereview.html")
 
@@ -113,8 +116,8 @@ def js_fetch():
 @app.route('/progress')
 def get_progress():
     # Generowanie losowych wartości progresu
-    progress_values = [random.randint(0, 100) for _ in range(3)]
-    return jsonify(progress_values)
+    # progress_values = analyses.analyseText()
+    return jsonify([1, 0.5, 0.2])
 
 
 #------------------------------------------------------------
