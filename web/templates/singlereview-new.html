@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+	/* Style for the page container */
+	/* body {
+		font-family: Arial, sans-serif;
+		background-color: #f5f7fa;
+		color: #333;
+		margin: 0;
+		padding: 20px;
+	} */
+
+	/* Styling the main header */
+	/* h1 {
+		color: #4a4a4a;
+		text-align: center;
+		font-size: 2rem;
+	} */
+
+	/* Style for the textarea */
+	textarea {
+		width: 100%;
+		height: 200px;
+		padding: 10px;
+		border-radius: 8px;
+		border: 1px solid #a1a1a1;
+		background-color: #e0e0e0;
+		font-size: 1rem;
+		color: #333;
+		transition: background-color 0.3s ease;
+	}
+
+	textarea:focus {
+		background-color: #d1e7fd;
+		outline: none;
+		border-color: #4a90e2;
+	}
+
+	/* Style for the submit button */
+	button {
+		background-color: #4CAF50;
+		color: white;
+		border: none;
+		padding: 10px 20px;
+		border-radius: 8px;
+		cursor: pointer;
+		font-size: 1rem;
+		transition: background-color 0.3s ease;
+		margin-top: 10px;
+	}
+
+	button:hover {
+		background-color: #45a049;
+	}
+
+	/* Progress bar container styling */
+	.progress-container {
+		display: flex;
+		gap: 20px;
+		margin-top: 30px;
+		justify-content: center;
+		align-items: flex-end;
+	}
+
+	/* Styling for each progress bar */
+	.progress-bar {
+		width: 100px;
+		height: 300px;
+		background-color: #e0e0e0;
+		border-radius: 10px;
+		overflow: hidden;
+		position: relative;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	/* Dynamic fill for each progress bar */
+	.progress-bar-fill {
+		width: 100%;
+		height: 0;
+		position: absolute;
+		bottom: 0;
+		border-radius: 8px;
+		color: white;
+		font-weight: bold;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		padding-bottom: 5px;
+		transition: height 2s ease-out;
+	}
+
+	/* Colors for each sentiment */
+	.positive { background-color: #4aa54d; }
+	.negative { background-color: #ba1f1f; }
+	.neutral { background-color: #1b356e; }
+
+	/* Animation for the fill elements */
+	/* @keyframes grow {
+		from { height: 0; }
+		to { height: var(--target-height); }
+	}
+
+	.progress-bar-fill[data-height] {
+		animation: grow 2s ease-out forwards;
+		--target-height: attr(data-height);
+	} */
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>Live Text Sentiment Analysis</h1>
+
+<div id="word">
+	<form action="/singlereview" method="POST" id="textForm">
+		<label for="textinput">Enter the content you want to analyse:</label>
+		<br>
+		<textarea id="textinput" name="textinput" placeholder="Your text..." required>{{ textinput }}</textarea>
+		<br>
+		<button type="submit" onclick="scrollToBottom()">Submit</button>
+	</form>
+</div>
+
+{% if sentiment %}
+	<p>Text used in analysis: <span id="score">{{ text }}</span>.</p>
+	<p>Your text was classified as <span id="score">{{ sentiment }}</span>.</p>
+
+	<h1>Sentiment Distribution</h1>
+
+	<!-- Progress bars container -->
+	<div class="progress-container">
+		<div class="progress-bar" id="progress1">
+			<div class="progress-bar-fill positive" id="fill1" data-height="{{ positive }}%">Positive</div>
+		</div>
+		<div class="progress-bar" id="progress2">
+			<div class="progress-bar-fill negative" id="fill2" data-height="{{ negative }}%">Negative</div>
+		</div>
+		<div class="progress-bar" id="progress3">
+			<div class="progress-bar-fill neutral" id="fill3" data-height="{{ neutral }}%">Neutral</div>
+		</div>
+	</div>
+{% endif %}
+
+<script>
+	// Set heights of progress bars on load with animation
+	window.addEventListener("load", function() {
+		document.getElementById("fill1").style.height = document.getElementById("fill1").getAttribute("data-height");
+		document.getElementById("fill2").style.height = document.getElementById("fill2").getAttribute("data-height");
+		document.getElementById("fill3").style.height = document.getElementById("fill3").getAttribute("data-height");
+
+		setTimeout(
+            // Scroll to bottom function
+            function scrollToBottom() {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+            ,300); // Delay scrolling
+	});
+</script>
+
+{% endblock %}

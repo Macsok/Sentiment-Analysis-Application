@@ -45,10 +45,10 @@ def singlereview():
         scores = analyses.analyseText(text)
         sentiment = analyses.getSentiment(scores[3])
 
-        return render_template("singlereview.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
+        return render_template("singlereview-new.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
                                negative=scores[1]*100, neutral=scores[2]*100, text=scores[4])
     else:
-        return render_template("singlereview.html")
+        return render_template("singlereview-new.html")
 
       
 @app.route("/wordreview", methods=["GET", "POST"])
