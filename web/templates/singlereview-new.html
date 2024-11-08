@@ -3,13 +3,14 @@
 {% block head %}
 <style>
 	/* Style for the page container */
-	/* body {
-		font-family: Arial, sans-serif;
+	body {
+		/* font-family: Arial, sans-serif;
 		background-color: #f5f7fa;
 		color: #333;
 		margin: 0;
-		padding: 20px;
-	} */
+		padding: 20px; */
+		position: relative;
+	}
 
 	/* Styling the main header */
 	/* h1 {
@@ -20,7 +21,7 @@
 
 	/* Style for the textarea */
 	textarea {
-		width: 100%;
+		width: 98%;
 		height: 200px;
 		padding: 10px;
 		border-radius: 8px;
@@ -29,6 +30,8 @@
 		font-size: 1rem;
 		color: #333;
 		transition: background-color 0.3s ease;
+		resize: none;
+
 	}
 
 	textarea:focus {
@@ -48,10 +51,12 @@
 		font-size: 1rem;
 		transition: background-color 0.3s ease;
 		margin-top: 10px;
+		margin-left: 62vw;
+		position: relative;
 	}
 
 	button:hover {
-		background-color: #45a049;
+		background-color: #326b35;
 	}
 
 	/* Progress bar container styling */
@@ -90,27 +95,52 @@
 		transition: height 2s ease-out;
 	}
 
-	/* Colors for each sentiment */
-	.positive { background-color: #4aa54d; }
-	.negative { background-color: #ba1f1f; }
-	.neutral { background-color: #1b356e; }
-
-	/* Animation for the fill elements */
-	/* @keyframes grow {
-		from { height: 0; }
-		to { height: var(--target-height); }
+	/* Sentiment box styles */
+	.sentiment-box {
+		width: 50%;
+		margin: 20px auto;
+		padding: 15px;
+		border-radius: 8px;
+		color: white;
+		text-align: center;
+		font-size: 1.2rem;
+		font-weight: bold;
 	}
 
-	.progress-bar-fill[data-height] {
-		animation: grow 2s ease-out forwards;
-		--target-height: attr(data-height);
-	} */
+	.sentiment-box.positive {
+		background-color: #4aa54d;
+		color: white;
+	}
+
+	.sentiment-box.negative {
+		background-color: #ba1f1f;
+		color: white;
+	}
+
+	.sentiment-box.neutral {
+		background-color: #1b356e;
+		color: white;
+	}
+
+	/* Colors for each sentiment */
+	.positive { 
+		background-color: #4aa54d; 
+		color: #333;
+	}
+	.negative { 
+		background-color: #ba1f1f; 
+		color: #333;
+	}
+	.neutral { 
+		background-color: #1b356e; 
+		color: #333;
+	}
 </style>
 {% endblock %}
 
 {% block content %}
 
-<h1>Live Text Sentiment Analysis</h1>
+<h1 style="margin-top: 2cm; margin-bottom: 2cm; text-align: center;">Live Text Sentiment Analysis</h1>
 
 <div id="word">
 	<form action="/singlereview" method="POST" id="textForm">
@@ -124,7 +154,11 @@
 
 {% if sentiment %}
 	<p>Text used in analysis: <span id="score">{{ text }}</span>.</p>
-	<p>Your text was classified as <span id="score">{{ sentiment }}</span>.</p>
+
+	<!-- Sentiment classification result in a colored box -->
+	<div class="sentiment-box {{ sentiment|lower }}">
+		<p>Your text was classified as: <strong>{{ sentiment }}</strong>.</p>
+	</div>
 
 	<h1>Sentiment Distribution</h1>
 
@@ -141,6 +175,7 @@
 		</div>
 	</div>
 {% endif %}
+
 
 <script>
 	// Set heights of progress bars on load with animation
