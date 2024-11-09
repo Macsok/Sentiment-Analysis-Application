@@ -31,7 +31,7 @@
 		color: #333;
 		transition: background-color 0.3s ease;
 		resize: none;
-
+		margin-top: 1vw;
 	}
 
 	textarea:focus {
@@ -51,7 +51,7 @@
 		font-size: 1rem;
 		transition: background-color 0.3s ease;
 		margin-top: 10px;
-		margin-left: 62vw;
+		margin-left: 91%;
 		position: relative;
 	}
 
@@ -62,7 +62,7 @@
 	/* Progress bar container styling */
 	.progress-container {
 		display: flex;
-		gap: 20px;
+		gap: 5vw;
 		margin-top: 30px;
 		justify-content: center;
 		align-items: flex-end;
@@ -105,6 +105,8 @@
 		text-align: center;
 		font-size: 1.2rem;
 		font-weight: bold;
+		margin-bottom: 10vw;
+		margin-top: 10vw;
 	}
 
 	.sentiment-box.positive {
@@ -118,7 +120,8 @@
 	}
 
 	.sentiment-box.neutral {
-		background-color: #1b356e;
+		/* background-color: #1b356e; */
+		background-color: #3888e3;
 		color: white;
 	}
 
@@ -132,7 +135,7 @@
 		color: #333;
 	}
 	.neutral { 
-		background-color: #1b356e; 
+		background-color: #3888e3; 
 		color: #333;
 	}
 </style>
@@ -160,7 +163,7 @@
 		<p>Your text was classified as: <strong>{{ sentiment }}</strong>.</p>
 	</div>
 
-	<h1>Sentiment Distribution</h1>
+	<h1 style="text-align: center;">Distribution of classified words</h1>
 
 	<!-- Progress bars container -->
 	<div class="progress-container">
