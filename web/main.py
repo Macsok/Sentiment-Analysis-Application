@@ -42,11 +42,11 @@ def singlereview():
     if request.method == "POST":
         text = request.form["textinput"]
         print(text)
-        scores = analyses.analyseText(text)
+        scores = analyses.defaultAnalysis(text)
         sentiment = analyses.getSentiment(scores[3])
 
         return render_template("singlereview-new.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
-                               negative=scores[1]*100, neutral=scores[2]*100, text=scores[4])
+                               negative=scores[1]*100, neutral=scores[2]*100, language=scores[4].upper(), text=scores[5])
     else:
         return render_template("singlereview-new.html")
 
