@@ -57,9 +57,9 @@ async def extract_replies(replies_data, page, max_replies=200):
         list: Updated list of replies.
     """
     #replay_selector-used to find all replies, text_selector-used to exctract reply text, username_selector-used to exctract username form reply
-    reply_selector = "[data-testid='tweet'][tabindex='0']"
-    text_selector = "div[data-testid='tweetText'] span"
-    username_selector = "div[data-testid='User-Name'] span span"
+    reply_selector = "[data-testid='tweet'][tabindex='0']" #Each reply card
+    text_selector = "div[data-testid='tweetText'] span" #Reply body text
+    username_selector = "div[data-testid='User-Name'] span span" #Username of the one replying
 
     #waits for the page to fully load, The "domcontentloaded" event in web terms means that the HTML document has been completely loaded and parsed
     await page.wait_for_load_state("domcontentloaded")
