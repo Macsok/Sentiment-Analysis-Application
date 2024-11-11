@@ -47,7 +47,45 @@ def analyseText(text : str = '', translate : bool = True, skip_non_eng : bool = 
 # print(analyseText(str(input('enter text: '))))
 
 
-def getSentiment(score) -> str:
-    """Returns sentiment of provided scores (positive/negative/neutral)"""
+def get_sentiment(score: float) -> str:
+    """
+    Returns the sentiment based on the provided score.
+    Possible outputs: 'positive', 'negative', or 'neutral'.
+    """
     sentiment = 'positive' if score > 0 else 'negative' if score < 0 else 'neutral'
     return sentiment
+
+
+def default_analysis(text: str = ''):
+    """
+    Analyzes the sentiment of a provided text. Translates any non-English 
+    text by default; to enhance performance, you may set 'translate' to False.
+    
+    Returns:
+        - 1 if language detection fails.
+        - 2 if language translation fails.
+        - 0 for text that was not in English and was skipped.
+    
+    Returns sentiment scores (positive, negative, neutral, compound),
+    detected language, and (if applicable) translated text.
+    """
+    # Default return
+    if text == '': return ''
+    # Creating objects to analyse and translate
+    sia = SentimentIntensityAnalyzer()
+    translator = Translator()
+
+    # Language detection
+    try:
+        language = translator.detect(text).lang
+    except: return 1
+
+    if language != 'en':
+        # Translating detected language to english
+        try:
+            text = translator.translate(text, src=language, dest='en').text
+        except:
+            return 2
+    # Scores for translated text
+    scores = sia.polarity_scores(text)
+    return scores['pos'], scores['neg'], scores['neu'], scores['compound'], language, text
