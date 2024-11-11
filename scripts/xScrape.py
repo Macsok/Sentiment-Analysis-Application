@@ -46,7 +46,7 @@ async def login_to_x(page, username: str, password: str):
 
 async def extract_replies(replies_data, page, max_replies=200):
     """
-    Extracts replies from a specific post on X.com.
+    Extracts replies from a specific post on X.com. Returns list of retrieved replies in cvs format, each entry has username and a text of the reply.
 
     Args:
         replies_data (list): List of replies to populate.
