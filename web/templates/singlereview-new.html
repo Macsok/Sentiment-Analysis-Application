@@ -95,6 +95,21 @@
 		transition: height 2s ease-out;
 	}
 
+	/* Language box style */
+	.language-box {
+		width: 90%;
+		margin: 20px auto;
+		padding: 15px;
+		border-radius: 8px;
+		text-align: center;
+		font-size: 1.2rem;
+		/* font-weight: bold; */
+		/* margin-bottom: 3vw; */
+		margin-top: 3vw;
+		background-color: #393939;
+		color: white;
+	}
+
 	/* Sentiment box styles */
 	.sentiment-box {
 		width: 50%;
@@ -156,7 +171,15 @@
 </div>
 
 {% if sentiment %}
-	<p>Text used in analysis: <span id="score">{{ text }}</span>.</p>
+	<!-- Sentiment classification result in a colored box -->
+	<div class="language-box"><p style="font-weight: bold;">Detected language: {{ language }}</p>
+	<p><strong>Text used in analysis: </strong><span id="score">{{ text }}</span></p>	
+	</div>
+
+	<div style="width: 80%; text-align: center; margin: auto;">
+	<p style="color: #575a57;">note: The distribution of words classified into specific categories
+		will result in a neutral text if positive words balance out the negative ones, or if only neutral words are detected.</p>
+	</div>
 
 	<!-- Sentiment classification result in a colored box -->
 	<div class="sentiment-box {{ sentiment|lower }}">
