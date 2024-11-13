@@ -1,4 +1,6 @@
 body{
+	min-height: 100vh;
+	margin: 0;
 	background-image: url("img/background.png");
     font-size: 20px;
     margin: 0px !important;
@@ -64,8 +66,9 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	background-color: #151515;
-	min-height: 70.7vh;
+
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 }
 
@@ -168,10 +171,10 @@ ol > li > ul > li:hover > a{
 	color: rgb(0, 25, 58);
 }
 
-footer{
-	position: fixed;
+#footer{
+	/* position: fixed;
 	bottom: 0;
-	right: 0;
+	right: 0; */
 	width: 100%;
 	text-align: center;
 	padding-top: 10px;
@@ -180,3 +183,12 @@ footer{
 	word-spacing: 5px;
 	font-size: 16px;
 }
+
+body{
+	display: flex;
+	flex-direction: column;
+}
+
+#container {
+	flex: 1;
+  }
