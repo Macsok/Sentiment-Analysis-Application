@@ -53,7 +53,7 @@
             <div id="logo">
             
                 <a href="{{ url_for('home')}}" class="logolink">
-                    <i class=" icon-chat" id="icon-chat"></i>
+                    <img src="{{ url_for('static', filename='css/img/icon.png') }}" id="logoimg"/>
                     <h1 style="float: left;">Comment reviewer</h1>
                     <div style="clear: both;"></div>
                 </a>
@@ -64,7 +64,7 @@
         <div class="nav">
             <ol>
                 <li><a href="{{ url_for('home')}}" >Home</a></li>
-                <li style="width: 150px;"><a href="{{ url_for('review')}}" >Review</a>
+                <li style="width: 150px;">Review
                     <ul>
                         <li><a href="{{ url_for('wordreview')}}" >Single word</a></li>
                         <li><a href="{{ url_for('singlereview')}}" >Single comment</a></li>
@@ -79,16 +79,30 @@
         </div> 
     </header>
 
-    <main>
-        <div id="container">
+
+    <div id="container">
+        <main>
             <div id="content">
 
                 {% block content %}{% endblock %}
+                
 
             </div>
+        </main>
+
+        <div id="rightad" style="display: flex; flex-wrap: wrap; padding: 15px ;">
+            <a href="https://www.youtube.com/watch?v=o-YBDTqX_ZU" target="_blank">
+                <img src="{{ url_for('static', filename='css/img/rightad.png')}}" style="width: 160px; height: 600px;"/>
+            </a>
         </div>
-        
-    </main>
+    </div>        
+
+
+    <div id="bottomad" style="display: flex; padding-top: 10px ; padding-bottom: 50px; max-height: 100px; max-width: 900px; margin-left: auto; margin-right: auto; ">
+        <a href="https://www.youtube.com/watch?v=o-YBDTqX_ZU" target="_blank">
+            <img src="{{ url_for('static', filename='css/img/d.png')}}" style="width: 900px; height: 100px; "/>
+        </a>
+    </div>
 
     <footer>
         <div id></div>

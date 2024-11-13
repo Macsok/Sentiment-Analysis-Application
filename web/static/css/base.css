@@ -7,16 +7,27 @@ body{
 
 #logobackground{
 	width: 100%;
-	background-color: #151515;
+	background-color: #010909;
+	background-image: url("img/logobak.png");
 }
 
 #logo{
     height: 40px;    
 	padding-bottom: 50px;
-	padding: 20px 20px 50px 20px;
+	padding: 10px 10px 60px 10px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 390px;
+	background-color: #010909;
+	-webkit-box-shadow: 0px 0px 60px 100px rgba(1, 9, 9, 1);
+	-moz-box-shadow: 0px 0px 60px 100px rgba(1, 9, 9, 1);
+	box-shadow: 0px 0px 60px 100px rgba(1, 9, 9, 1);
+}
+
+#logoimg{
+	width: 75px;
+	height: 75px;
+	float: left;
 }
 
 .logolink
@@ -26,19 +37,12 @@ body{
 }
 
 #logo h1{
-	font-size: 25px;
-	text-align: justify;
-	padding-right: 20px;
+	font-size: 30px;
+	text-align: center;
+	padding-left: 20px;
 	font-weight: 600;
 	letter-spacing: 1px;
-}
-
-#icon-chat{
-	font-size: 55px; 
-	float: left; 
-	padding-right: 30px;
-	color: #008b8b;
-	
+	padding-top: 15px;
 }
 
 .sticky
@@ -52,25 +56,17 @@ body{
 }
 
 
-.nav{
-    width: 100%;
-	padding: 10px 0;
-	background-color: #008b8b;
-	text-align: center;
-    color: #ffffff;
-	border-top: 1px rgb(4, 82, 82);
-	border-bottom: 1px rgb(4, 82, 82);
-
-}
 
 #container{
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width: 65vw;
+	width: 75vw;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: #151515;
-	min-height: 70.7vh
+	min-height: 70.7vh;
+	display: flex;
+	justify-content: space-between;
 }
 
 #content{
@@ -78,7 +74,24 @@ body{
 	font-weight: 200;
 	word-spacing: 3px;
 	line-height: 25px;
+	padding-bottom: 10px;
 }
+
+#content h1{
+	line-height: 50px;
+}
+
+
+.nav{
+    width: 100%;
+	padding: 10px 0;
+	background-color: #6563FF;
+	text-align: center;
+    color: #ffffff;
+	border-top: 1px #524fce;
+	border-bottom: 1px #524fce;
+}
+
 
 ol
 {
@@ -88,14 +101,21 @@ ol
 	font-size: 18px;
 	height: 35px;
 	line-height: 200%;
-	display: inline-block;
+	display: flex;
+	justify-content: center;
 }
+
 
 ol a
 {
 	color: #ffffff;
 	text-decoration: none;
 	display: block;
+}
+
+ol > li:hover{
+	color: #000000;
+	cursor: pointer;
 }
 
 ol > li
@@ -108,12 +128,12 @@ ol > li
 
 ol > li:first-child
 {
-	border-left: 1px dashed #add8e6;
+	border-left: 1px dashed lightblue;
 }
 
 ol > li:hover
 {
-	background-color: #109b9b;
+	background-color: #8583FF;
 }
 
 ol > li a:hover{
@@ -134,7 +154,7 @@ ol > li:hover > ul{
 }
 
 ol > li > ul > li{
-	background-color: #109b9b;
+	background-color: #8583FF;
 	position: relative;
 	z-index: 100;
 	border-top: 1px dashed lightblue;
@@ -149,10 +169,14 @@ ol > li > ul > li:hover > a{
 }
 
 footer{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 100%;
 	text-align: center;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	background-color: #222222;
 	word-spacing: 5px;
-	font-size: 18px;
+	font-size: 16px;
 }
