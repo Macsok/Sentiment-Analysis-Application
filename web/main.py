@@ -3,6 +3,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../scripts'))
 from scripts import analyses
+import time
 
 
 app = Flask(__name__)
@@ -21,9 +22,9 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/index")
-def index():
-    return render_template("index.html")
+@app.route("/pepe")
+def pepe():
+    return render_template("pepe.html")
   
 
 @app.route("/allcommentsreview", methods=["GET", "POST"])
@@ -38,17 +39,23 @@ def allcommentsreview():
 
       
 @app.route("/singlereview", methods=["GET", "POST"])
+
 def singlereview():
     if request.method == "POST":
+
+        start = time.time()
         text = request.form["textinput"]
         print(text)
         scores = analyses.default_analysis(text)
         sentiment = analyses.get_sentiment(scores[3])
+        end = time.time()
+        adbreak = 15;
+        wait_time = max(0, (adbreak - (end - start)) * 1000)
 
         return render_template("singlereview-new.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
-                               negative=scores[1]*100, neutral=scores[2]*100, language=scores[4].upper(), text=scores[5])
+                               negative=scores[1]*100, neutral=scores[2]*100, language=scores[4].upper(), text=scores[5], wait_time=wait_time)
     else:
-        return render_template("singlereview-new.html")
+        return render_template("singlereview-new.html", wait_time=0)
 
       
 @app.route("/wordreview", methods=["GET", "POST"])

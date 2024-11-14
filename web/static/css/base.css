@@ -1,10 +1,25 @@
 body{
+	font-family: "Lato", system-ui;
+    font-weight: 400;
+    font-style: normal;
 	min-height: 100vh;
 	margin: 0;
 	background-image: url("img/background.png");
     font-size: 20px;
     margin: 0px !important;
     color: #ffffff;
+}
+
+.loader-wrapper{
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #151515;
+    z-index: 101;
+    display: none;
 }
 
 #logobackground{
@@ -93,6 +108,7 @@ body{
     color: #ffffff;
 	border-top: 1px #524fce;
 	border-bottom: 1px #524fce;
+	padding-bottom: 13px;
 }
 
 

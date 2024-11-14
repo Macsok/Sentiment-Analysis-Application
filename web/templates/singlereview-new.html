@@ -1,164 +1,13 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style>
-	/* Style for the page container */
-	body {
-		/* font-family: Arial, sans-serif;
-		background-color: #f5f7fa;
-		color: #333;
-		margin: 0;
-		padding: 20px; */
-		position: relative;
-	}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/review.css')}}">
 
-	/* Styling the main header */
-	/* h1 {
-		color: #4a4a4a;
-		text-align: center;
-		font-size: 2rem;
-	} */
-
-	/* Style for the textarea */
-	textarea {
-		width: 98%;
-		height: 200px;
-		padding: 10px;
-		border-radius: 8px;
-		border: 1px solid #a1a1a1;
-		background-color: #e0e0e0;
-		font-size: 1rem;
-		color: #333;
-		transition: background-color 0.3s ease;
-		resize: none;
-		margin-top: 1vw;
-	}
-
-	textarea:focus {
-		background-color: #d1e7fd;
-		outline: none;
-		border-color: #4a90e2;
-	}
-
-	/* Style for the submit button */
-	button {
-		background-color: #4CAF50;
-		color: white;
-		border: none;
-		padding: 10px 20px;
-		border-radius: 8px;
-		cursor: pointer;
-		font-size: 1rem;
-		transition: background-color 0.3s ease;
-		margin-top: 10px;
-		margin-left: 91%;
-		position: relative;
-	}
-
-	button:hover {
-		background-color: #326b35;
-	}
-
-	/* Progress bar container styling */
-	.progress-container {
-		display: flex;
-		gap: 5vw;
-		margin-top: 30px;
-		justify-content: center;
-		align-items: flex-end;
-	}
-
-	/* Styling for each progress bar */
-	.progress-bar {
-		width: 100px;
-		height: 300px;
-		background-color: #e0e0e0;
-		border-radius: 10px;
-		overflow: hidden;
-		position: relative;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	}
-
-	/* Dynamic fill for each progress bar */
-	.progress-bar-fill {
-		width: 100%;
-		height: 0;
-		position: absolute;
-		bottom: 0;
-		border-radius: 8px;
-		color: white;
-		font-weight: bold;
-		display: flex;
-		align-items: flex-end;
-		justify-content: center;
-		padding-bottom: 5px;
-		transition: height 2s ease-out;
-	}
-
-	/* Language box style */
-	.language-box {
-		width: 90%;
-		margin: 20px auto;
-		padding: 15px;
-		border-radius: 8px;
-		text-align: center;
-		font-size: 1.2rem;
-		/* font-weight: bold; */
-		/* margin-bottom: 3vw; */
-		margin-top: 3vw;
-		background-color: #393939;
-		color: white;
-	}
-
-	/* Sentiment box styles */
-	.sentiment-box {
-		width: 50%;
-		margin: 20px auto;
-		padding: 15px;
-		border-radius: 8px;
-		color: white;
-		text-align: center;
-		font-size: 1.2rem;
-		font-weight: bold;
-		margin-bottom: 10vw;
-		margin-top: 10vw;
-	}
-
-	.sentiment-box.positive {
-		background-color: #4aa54d;
-		color: white;
-	}
-
-	.sentiment-box.negative {
-		background-color: #ba1f1f;
-		color: white;
-	}
-
-	.sentiment-box.neutral {
-		/* background-color: #1b356e; */
-		background-color: #3888e3;
-		color: white;
-	}
-
-	/* Colors for each sentiment */
-	.positive { 
-		background-color: #4aa54d; 
-		color: #333;
-	}
-	.negative { 
-		background-color: #ba1f1f; 
-		color: #333;
-	}
-	.neutral { 
-		background-color: #3888e3; 
-		color: #333;
-	}
-</style>
 {% endblock %}
 
 {% block content %}
 
-<h1 style="margin-top: 2cm; margin-bottom: 2cm; text-align: center;">Live Text Sentiment Analysis</h1>
+<h1>Live Text Sentiment Analysis</h1>
 
 <div id="word">
 	<form action="/singlereview" method="POST" id="textForm">
@@ -166,17 +15,35 @@
 		<br>
 		<textarea id="textinput" name="textinput" placeholder="Your text..." required>{{ textinput }}</textarea>
 		<br>
-		<button type="submit" onclick="scrollToBottom()">Submit</button>
+		<button type="submit" onclick="scrollToBottom();showLoader()">Submit</button>
 	</form>
 </div>
 
 {% if sentiment %}
+
+
+	<script>
+		function showLoader() {
+			// Pokaż loader
+			document.getElementById("loader-wrapper").style.display = "flex";
+	
+			// Ukryj loader po upływie `time` milisekund
+			setTimeout(function() {
+				document.getElementById("loader-wrapper").style.display = "none";
+			}, {{ wait_time }});
+		}
+	
+		// Wywołanie funkcji showLoader na załadowanie strony
+		window.addEventListener("load", showLoader);
+	</script>
+
+
 	<!-- Sentiment classification result in a colored box -->
 	<div class="language-box"><p style="font-weight: bold;">Detected language: {{ language }}</p>
 	<p><strong>Text used in analysis: </strong><span id="score">{{ text }}</span></p>	
 	</div>
 
-	<div style="width: 80%; text-align: center; margin: auto;">
+	<div id="note">
 	<p style="color: #575a57;">note: The distribution of words classified into specific categories
 		will result in a neutral text if positive words balance out the negative ones, or if only neutral words are detected.</p>
 	</div>
@@ -200,6 +67,8 @@
 			<div class="progress-bar-fill neutral" id="fill3" data-height="{{ neutral }}%">Neutral</div>
 		</div>
 	</div>
+
+
 {% endif %}
 
 
@@ -221,5 +90,8 @@
             ,300); // Delay scrolling
 	});
 </script>
+
+
+
 
 {% endblock %}
