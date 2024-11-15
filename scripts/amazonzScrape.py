@@ -12,7 +12,7 @@ username_burner = "login"
 password_burner = "password"
 
 # Function to log in to Amazon using Playwright
-async def login_to_amazon(page, username: str, password: str):
+async def login_to_amazon(page, username: str, password: str) -> None:
     """
     Logs in to Amazon using provided credentials.
 
@@ -141,7 +141,7 @@ async def run(playwright, url) -> None:
         await browser.close()
 
 # Function to clean extracted text by removing whitespace and non-ASCII characters
-def clean_data(data):
+def clean_data(data) -> str|None:
     """
     Cleans text by removing excess whitespace and non-ASCII characters.
 
@@ -159,7 +159,7 @@ def clean_data(data):
     return cleaned_data if re.search(r'[a-zA-Z]', cleaned_data) else None  # Return cleaned text or None if invalid
 
 # Function to save extracted review data to a CSV file
-def save_data_to_csv(reviews_data: list, filename: str):
+def save_data_to_csv(reviews_data: list, filename: str) -> None:
     """
     Saves extracted review data to a CSV file.
 
