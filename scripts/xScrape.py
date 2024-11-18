@@ -28,7 +28,7 @@ async def login_to_x(page, username: str, password: str):
 
     # Retry filling the username in case of an additional prompt
     try:
-        await page.wait_for_selector("input[name='text']", timeout=10000)
+        await page.wait_for_selector("input[name='text']", timeout=5000)
         await page.fill(username_section, username)
         await page.press(username_section, "Enter")
     except TimeoutError:
@@ -106,7 +106,7 @@ async def extract_replies(replies_data, page, max_replies=200):
 
         # Scroll down to load more replies, assuming more are dynamically loaded as we scroll
         await page.mouse.wheel(0, 1000)  # Scroll down by simulating mouse wheel movement
-        await page.wait_for_timeout(10000)  # Wait 10 seconds to give time for new replies to load
+        await page.wait_for_timeout(5000)  # Wait 10 seconds to give time for new replies to load
 
         # Check if new replies have loaded by recounting the reply elements
         new_replies_count = await page.locator(reply_selector).count()
@@ -154,15 +154,15 @@ async def run(playwright, url) -> list:
         # Navigate to the specified URL (the post to analyze) and wait until the main content is loaded
         await page.goto(url, wait_until="domcontentloaded")
 
-        # Call the function to extract replies from the loaded post
-        replies_data = await extract_replies(replies_data, page)
+        # Extract replies and save them to CSV
+        await extract_replies(replies_data, page)
+        save_data_to_csv(replies_data, "X_Replies.csv")
 
         # Close both the browser context and browser session to clear session data and isolate state
         await context.close()
         await browser.close()
 
-    # Return the list of extracted replies once they have been successfully gathered
-    return replies_data
+
 
 
 def clean_data(data):
@@ -208,7 +208,7 @@ def save_data_to_csv(replies_data: list, filename: str):
         writer.writerows(replies_data)  # Write each reply as a new row in the CSV
 
 
-async def main(url) -> list:
+async def get_replies(url) -> list:
     """
     Main function to initialize Playwright, log in, and retrieve replies from a specified post URL.
 
@@ -216,7 +216,7 @@ async def main(url) -> list:
         url (str): The URL of the post on X.com from which to extract replies.
 
     Returns:
-        list: A list of dictionaries, each containing 'username' and 'reply_text' for a reply.
+        None
     """
     async with async_playwright() as playwright:
         # Run the process using Playwright and retrieve replies data
@@ -224,5 +224,5 @@ async def main(url) -> list:
 
 
 # Running the main asynchronous function and capturing returned replies
-#url = input("Enter the URL of the post on X.com: ")
-#replies_data = asyncio.run(main(url))
+url = input("Enter the URL of the post on X.com: ")
+asyncio.run(get_replies(url))
