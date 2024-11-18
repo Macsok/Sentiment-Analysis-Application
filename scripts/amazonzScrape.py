@@ -26,7 +26,7 @@ async def login_to_amazon(page, username: str, password: str) -> None:
     """
     # Navigate to the Amazon login page
     print("Navigating to Amazon login page...")
-    await page.goto("https://www.amazon.com/ap/signin")
+    await page.goto("https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2FRedragon-S101-Keyboard-Ergonomic-Programmable%2Fdp%2FB00NLZUM36%2Fref%3Dnav_signin%3F_encoding%3DUTF8%26content-id%3Damzn1.sym.12129333-2117-4490-9c17-6d31baf0582a%26dib%3DeyJ2IjoiMSJ9.5IlsBDmYkV0cxr2kcvPErft4Zv50KQZF5msSYapyt3-c0aoK8Q2jW8E_B7jXwd9x0R-F0asV2u_xofM5o-OfsbhoVydlcgErNYZxAEXAM2uFJnF5ytQ1Q2LmwHg1NtZQh9tTmflAoXOvgcbe7sbMGOC1kIokWeNfIqacEuq_Q0FRaz_WHyPVXzZsFL2VzLNARFxBf-LbJPBbQYzUv0kUUm6gQH7rwSkPrBdYbaP1DdY.2KsNSHAbwPIFRafc3J20nBUW_t2aXVcu7BCdnx3npzU%26dib_tag%3Dse%26keywords%3Dgaming%252Bkeyboard%26pd_rd_r%3D5b2dc48b-f75d-4903-867b-3831b638758f%26pd_rd_w%3DAXY9J%26pd_rd_wg%3D84UWx%26pf_rd_p%3D12129333-2117-4490-9c17-6d31baf0582a%26pf_rd_r%3DH94N0B3T6TRQQ53WHVS8%26qid%3D1731965745%26sr%3D8-1%26th%3D1&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0")
 
     # Enter the username and submit
     await page.fill("input[name='email']", username)
