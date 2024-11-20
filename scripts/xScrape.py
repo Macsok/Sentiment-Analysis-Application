@@ -134,7 +134,7 @@ async def run(playwright, url) -> list:
     # Keep attempting to gather replies until at least one reply is successfully extracted
     while len(replies_data) == 0:
         # Launch a new Chromium browser instance (headless=False to show the browser window)
-        browser = await playwright.chromium.launch(headless=False)
+        browser = await playwright.chromium.launch(headless=True)
 
         # Create a new browser context
         context = await browser.new_context()
