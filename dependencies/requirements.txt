@@ -1,0 +1,7 @@
+python: nltk.download('vader_lexicon')
+pip install googletrans==4.0.0-rc1
+pip install google-api-python-client
+pip install playwright
+npx playwright install firefox
+npx playwright install
+python -m playwright install
