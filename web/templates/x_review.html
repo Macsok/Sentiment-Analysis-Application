@@ -1,52 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+
+{% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Data from Python</title>
+    <title>Dynamic Row Updates (SSE)</title>
     <style>
-        #container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-        .data-item {
+        #output {
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+        /* Language box style */
+        .row {
+            width: 90%;
+            margin: auto;
             padding: 10px;
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            /* font-weight: bold; */
+            /* margin-bottom: 3vw; */
+            margin-top: 2vw;
+            background-color: #393939;
+            color: white;
+        }
+        .final-message {
+            font-weight: bold;
+            color: white;
+            background-color: darkblue;
+            padding: 10px;
+            text-align: center;
         }
     </style>
-</head>
-<body>
-    ok
-    <div id="container"></div>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Dynamic Row Updates (Length Calculation)</h1>
+    <div id="output"></div>
 
     <script>
-        const container = document.getElementById('container');
+        // Establish a connection to the SSE endpoint
+        const eventSource = new EventSource("/stream");
 
-        // Function to append data to the container
-        function appendData(data) {
-            const newDiv = document.createElement('div');
-            newDiv.classList.add('data-item');
-            newDiv.textContent = `${data.message} (Received at: ${data.timestamp})`;
-            container.appendChild(newDiv);
-        }
+        // When new data is received, update the page
+        eventSource.onmessage = function(event) {
+            // const outputDiv = document.getElementById("output");
+            // const newRow = document.createElement("div");
+            // newRow.className = "row";
+            // // newRow.textContent = event.data;  // Append the received data to the div
+            // newRow.innerHTML = event.data;
+            // outputDiv.appendChild(newRow);
 
-        // Function to fetch data from the Python backend
-        async function fetchData() {
-            try {
-                const response = await fetch('http://127.0.0.1:5000/get-data');
-                const data = await response.json();
-                appendData(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+            const container = document.getElementById("output");
+            // Parse the incoming JSON data
+            const resultData = JSON.parse(event.data);
+            // Create a new div for the incoming data
+            const newRow = document.createElement("div");
+            newRow.className = "row";  // Add class for styling
+            // Set the background color of the new row using the parsed color
+            newRow.style.backgroundColor = resultData.color;
+            // Insert the text content, author, and score received from the server
+            newRow.innerHTML = `
+                <strong>Author:</strong> ${resultData.author}
+                <strong>Original language:</strong> ${resultData.language} <br>
+                <strong>Comment:</strong> ${resultData.text} <br>
+                <strong>Score:</strong> ${resultData.compound}
+            `;
+            container.appendChild(newRow);
+
+            // If the final message is received, close the connection
+            if (resultData.is_final) {
+                // Create a unique final message element
+                const finalMessage = document.createElement("div");
+                finalMessage.className = "final-message";  // Add class for styling
+                finalMessage.textContent = resultData.text;  // Only display the final text
+                container.appendChild(finalMessage);
+
+                // Close the connection
+                eventSource.close();
+                return;  // Stop further processing
             }
-        }
+        };
 
-        // Periodically fetch data
-        setInterval(fetchData, 3000); // Fetch every 3 seconds
+        // Handle errors (optional)
+        eventSource.onerror = function(event) {
+            console.error("Error receiving SSE:", event);
+            eventSource.close();
+        };
     </script>
-</body>
-</html>
+{% endblock %}

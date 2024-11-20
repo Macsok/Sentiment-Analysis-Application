@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Response, jsonify
 import sys
 import os
+import time
 sys.path.append(os.path.join(os.path.dirname(__file__), '../scripts'))
 import analyses
-import time
+import sseStream
 
 
 app = Flask(__name__)
@@ -54,16 +55,18 @@ def contribute():
     return render_template("contribute.html")
 
 
-@app.route("/x", methods=["GET", "POST"])
-def x_twitter():
-    # if request.method == "POST":
-    #     text = request.form["textinput"]
-    #     print(text)
-    #     score = str(len(text)) + '%'
-    #     return render_template("x_review.html", textinput=text, score=score)
-    # else:
-    #     return render_template("x_review.html")
-    return render_template("x_review.html")
+@app.route("/stream")
+def stream():
+    """
+    This route streams the server-sent events (SSE) to the frontend.
+    """
+    csv_file_path = os.path.join(os.path.dirname(__file__), 'data.csv')
+    return Response(sseStream.x_generate_sse(csv_file_path), content_type='text/event-stream')
+
+
+@app.route('/x_review')
+def x_review():
+    return render_template('x_review.html')
     
     
 #------------------------------------------------------------
@@ -83,17 +86,27 @@ def baseForm():
     return render_template('form.html')
 """
 #------------------------------------------------------------
-import random
-from flask import jsonify
-@app.route('/get-data', methods=['GET'])
-def get_data():
-    """
-    Simulates a backend function generating random data.
-    """
-    random_number = random.randint(1, 100)  # Simulated data
-    timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-    data = {"message": f"Random Number: {random_number}", "timestamp": timestamp}
-    return jsonify(data)
+# import random
+# from flask_cors import CORS
+# from flask import jsonify, send_from_directory
+
+# CORS(app)
+
+# @app.route('/get-data', methods=['GET'])
+# def get_data():
+#     """
+#     Simulates a backend function generating random data.
+#     """
+#     random_number = random.randint(1, 100)  # Simulated data
+#     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+#     data = {"message": f"Random Number: {random_number}", "timestamp": timestamp}
+#     return jsonify(data)
+
+
+# @app.route('/x_review')
+# def x_review():
+#     return render_template('x_review.html')
+
 #------------------------------------------------------------
 
 
