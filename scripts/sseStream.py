@@ -19,15 +19,16 @@ def x_generate_sse(csv_file_path : str):
         for index, row in dataframe.iterrows():
             pos, neg, neu, compound, language, text = analyses.default_analysis(row['reply_text'])
             # Setting color
-            if compound < 0: color = '#ba1f1f'
-            elif compound > 0: color = '#4aa54d'
-            else: color = '#3888e3'
+            if compound < 0: color = 'negative'
+            elif compound > 0: color = 'positive'
+            else: color = 'neutral'
             result_data = {
                 'author': row['username'],
                 'text': text,
                 'compound': compound,
                 'language': language,
-                'color' : color
+                'color_type' : color,
+                'is_final' : False
             }
             result_json = json.dumps(result_data)
             yield f"data: {result_json}\n\n"

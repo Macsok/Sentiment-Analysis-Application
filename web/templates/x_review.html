@@ -7,11 +7,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 1vw;
         }
         #output {
             font-family: Arial, sans-serif;
-            margin-top: 20px;
+            margin-top: 1vw;
         }
         /* Language box style */
         .row {
@@ -23,16 +23,38 @@
             font-size: 1.2rem;
             /* font-weight: bold; */
             /* margin-bottom: 3vw; */
-            margin-top: 2vw;
-            background-color: #393939;
+            margin-top: 1vw;
+            /* background-color: #393939; */
             color: white;
         }
+        .row.positive {
+            background-color: #4aa54d;
+        }
+
+        .row.negative {
+            background-color: #ba1f1f;
+        }
+
+        .row.neutral {
+            background-color: #3888e3;
+        }
+
         .final-message {
-            font-weight: bold;
-            color: white;
-            background-color: darkblue;
+            width: 90%;
+            margin: auto;
             padding: 10px;
+            border-radius: 8px;
             text-align: center;
+            font-size: 1.2rem;
+            /* font-weight: bold; */
+            /* margin-bottom: 3vw; */
+            margin-top: 2vw;
+            background-color: #524646b9;
+            color: white;
+        }
+        p {
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 {% endblock %}
@@ -48,16 +70,25 @@
 
         // When new data is received, update the page
         eventSource.onmessage = function(event) {
-            // const outputDiv = document.getElementById("output");
-            // const newRow = document.createElement("div");
-            // newRow.className = "row";
-            // // newRow.textContent = event.data;  // Append the received data to the div
-            // newRow.innerHTML = event.data;
-            // outputDiv.appendChild(newRow);
-
             const container = document.getElementById("output");
             // Parse the incoming JSON data
             const resultData = JSON.parse(event.data);
+            // If the final message is received, close the connection
+
+            if (resultData.is_final) {
+                // Create a unique final message element
+                const finalMessage = document.createElement("div");
+                finalMessage.className = "final-message";  // Add class for styling
+                finalMessage.textContent = resultData.text;  // Only display the final text
+                container.appendChild(finalMessage);
+                // Scroll down
+                window.scrollTo(0, document.body.scrollHeight);
+
+                // Close the connection
+                eventSource.close();
+                return;  // Stop further processing
+            }
+
             // Create a new div for the incoming data
             const newRow = document.createElement("div");
             newRow.className = "row";  // Add class for styling
@@ -65,25 +96,16 @@
             newRow.style.backgroundColor = resultData.color;
             // Insert the text content, author, and score received from the server
             newRow.innerHTML = `
-                <strong>Author:</strong> ${resultData.author}
-                <strong>Original language:</strong> ${resultData.language} <br>
-                <strong>Comment:</strong> ${resultData.text} <br>
-                <strong>Score:</strong> ${resultData.compound}
+                <div class="row ${resultData.color_type}">
+                <p><span><strong>Author:</strong> ${resultData.author}</span>
+                <span><strong>Original language:</strong> ${resultData.language}</span></p>
+                <strong>Comment:</strong> ${resultData.text} <br><br>
+                <span><strong>Score:</strong> ${resultData.compound}</span>
+                </div>
             `;
             container.appendChild(newRow);
-
-            // If the final message is received, close the connection
-            if (resultData.is_final) {
-                // Create a unique final message element
-                const finalMessage = document.createElement("div");
-                finalMessage.className = "final-message";  // Add class for styling
-                finalMessage.textContent = resultData.text;  // Only display the final text
-                container.appendChild(finalMessage);
-
-                // Close the connection
-                eventSource.close();
-                return;  // Stop further processing
-            }
+            // Scroll down
+            window.scrollTo(0, document.body.scrollHeight);
         };
 
         // Handle errors (optional)
