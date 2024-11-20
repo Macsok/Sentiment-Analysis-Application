@@ -30,7 +30,6 @@ def pepe():
 @app.route("/singlereview", methods=["GET", "POST"])
 def singlereview():
     if request.method == "POST":
-
         start = time.time()
         text = request.form["textinput"]
         print(text)
@@ -39,11 +38,10 @@ def singlereview():
         end = time.time()
         adbreak = 15
         wait_time = max(0, (adbreak - (end - start)) * 1000)
-
-        return render_template("singlereview-new.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
+        return render_template("singlereview.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
                                negative=scores[1]*100, neutral=scores[2]*100, language=scores[4].upper(), text=scores[5], wait_time=wait_time)
     else:
-        return render_template("singlereview-new.html", wait_time=0)
+        return render_template("singlereview.html", wait_time=0)
 
 
 @app.route("/contact")
@@ -58,13 +56,14 @@ def contribute():
 
 @app.route("/x", methods=["GET", "POST"])
 def x_twitter():
-    if request.method == "POST":
-        text = request.form["textinput"]
-        print(text)
-        score = str(len(text)) + '%'
-        return render_template("wordreview.html", textinput=text, score=score)
-    else:
-        return render_template("wordreview.html")
+    # if request.method == "POST":
+    #     text = request.form["textinput"]
+    #     print(text)
+    #     score = str(len(text)) + '%'
+    #     return render_template("x_review.html", textinput=text, score=score)
+    # else:
+    #     return render_template("x_review.html")
+    return render_template("x_review.html")
     
     
 #------------------------------------------------------------
@@ -84,8 +83,17 @@ def baseForm():
     return render_template('form.html')
 """
 #------------------------------------------------------------
-
-
+import random
+from flask import jsonify
+@app.route('/get-data', methods=['GET'])
+def get_data():
+    """
+    Simulates a backend function generating random data.
+    """
+    random_number = random.randint(1, 100)  # Simulated data
+    timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+    data = {"message": f"Random Number: {random_number}", "timestamp": timestamp}
+    return jsonify(data)
 #------------------------------------------------------------
 
 

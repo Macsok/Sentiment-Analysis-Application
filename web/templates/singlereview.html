@@ -1,115 +1,97 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style>
-	/* Stylowanie kontenera dla słupków progresu */
-	.progress-container {
-		display: flex;
-		gap: 60px;
-		margin-top: 30px;
-		margin-right: auto;
-		margin-left: auto;
-		width: 50%;
-		align-items: flex-end;
-		justify-content: center;
-		align-items: center;
-	}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/review.css')}}">
 
-	/* Stylowanie pojedynczego słupka */
-	.progress-bar {
-		width: 50px;
-		height: 300px;
-		background-color: #e0e0e0;
-		border-radius: 10px;
-		overflow: hidden;
-		position: relative;
-	}
-
-	/* Stylowanie dynamicznego wypełnienia słupka */
-	.progress-bar-fill {
-		width: 100%;
-		height: 0;
-		background-color: #4caf50;
-		position: absolute;
-		bottom: 0;
-		transition: height 2s ease-out;
-		/* Text top to bottom */
-		writing-mode: tb-rl;
-		text-align: auto;
-	}
-
-	.positive { background-color: #4aa54d; }
-	.negative { background-color: #ba1f1f; }
-	.neutral { background-color: #1b356e; }
-</style>
 {% endblock %}
 
 {% block content %}
 
+<h1>Live Text Sentiment Analysis</h1>
+
+<div id="word">
+	<form action="/singlereview" method="POST" id="textForm">
+		<label for="textinput">Enter the content you want to analyse:</label>
+		<br>
+		<textarea id="textinput" name="textinput" placeholder="Your text..." required>{{ textinput }}</textarea>
+		<br>
+		<button type="submit" onclick="scrollToBottom();showLoader()">Submit</button>
+	</form>
+</div>
+
+{% if sentiment %}
 
 
-	<h1>Live text sentiment analysis</h1>
-
-    <div id="word">
-		<form action="/singlereview" method="POST" id="textForm">
-			Enter the content you want to analyse:
-			<br>
-			<textarea type="text" id="textinput" name="textinput" value="{{ textinput }}" 
-			style="width: 100%; height: 200px; resize: none; overflow: auto; background-color: #91ecd8bf; border-color: #64589a91;"
-			placeholder="Your text..." required></textarea>
-			<br>
-			<button type="submit" onclick="scrollToBottom()" style="margin-left: 95%; text-align: start;">Submit</button>
-		</form>
-	</div>
-
-    {% if sentiment %}
-	<p>Text used in analysis: <span id="score" >{{ text }}</span>.</p>
-    <p>Your text was classified as <span id="score">{{ sentiment }}</span>.</p>
-
-	<h1 style="text-align: center;">Sentiment distribution</h1>
-    
-    <!-- Progressbars container -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progress1">
-            <div class="progress-bar-fill positive" id="fill1" data-height="{{ positive }}%">Positive</div>
-        </div>
-        <div class="progress-bar" id="progress2">
-            <div class="progress-bar-fill negative" id="fill2" data-height="{{ negative }}%">Negative</div>
-        </div>
-        <div class="progress-bar" id="progress3">
-            <div class="progress-bar-fill neutral" id="fill3" data-height="{{ neutral }}%">Neutral</div>
-        </div>
-    </div>
-
-	<!-- Setting bars to 0 after site reload -->
 	<script>
-        window.addEventListener("load", function() {
-            document.getElementById("fill1").style.height = document.getElementById("fill1").getAttribute("data-height");
-            document.getElementById("fill2").style.height = document.getElementById("fill2").getAttribute("data-height");
-            document.getElementById("fill3").style.height = document.getElementById("fill3").getAttribute("data-height");
-        });
-
-		// Enter to submit form
-		document.getElementById("textinput").addEventListener("keydown", function(event) { 
-			if (event.key === "Enter" && !event.shiftKey) { 
-				event.preventDefault(); 
-				document.getElementById("textForm").submit(); } });
-
-		// Auto scroll down
-		function scrollToBottom() {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
-            });
+		function showLoader() {
+			// Pokaż loader
+			document.getElementById("loader-wrapper").style.display = "flex";
+	
+			// Ukryj loader po upływie `time` milisekund
+			setTimeout(function() {
+				document.getElementById("loader-wrapper").style.display = "none";
+			}, {{ wait_time }});
 		}
-
-		window.addEventListener("load", function() {
-            setTimeout(scrollToBottom, 500); // Opóźnienie 2 sekund (2000 milisekund)
-        });
+	
+		// Wywołanie funkcji showLoader na załadowanie strony
+		window.addEventListener("load", showLoader);
 	</script>
 
 
-    {% endif %}
+	<!-- Sentiment classification result in a colored box -->
+	<div class="language-box"><p style="font-weight: bold;">Detected language: {{ language }}</p>
+	<p><strong>Text used in analysis: </strong><span id="score">{{ text }}</span></p>	
+	</div>
+
+	<div id="note">
+	<p style="color: #575a57;">note: The distribution of words classified into specific categories
+		will result in a neutral text if positive words balance out the negative ones, or if only neutral words are detected.</p>
+	</div>
+
+	<!-- Sentiment classification result in a colored box -->
+	<div class="sentiment-box {{ sentiment|lower }}">
+		<p>Your text was classified as: <strong>{{ sentiment }}</strong>.</p>
+	</div>
+
+	<h1 style="text-align: center;">Distribution of classified words</h1>
+
+	<!-- Progress bars container -->
+	<div class="progress-container">
+		<div class="progress-bar" id="progress1">
+			<div class="progress-bar-fill positive" id="fill1" data-height="{{ positive }}%">Positive</div>
+		</div>
+		<div class="progress-bar" id="progress2">
+			<div class="progress-bar-fill negative" id="fill2" data-height="{{ negative }}%">Negative</div>
+		</div>
+		<div class="progress-bar" id="progress3">
+			<div class="progress-bar-fill neutral" id="fill3" data-height="{{ neutral }}%">Neutral</div>
+		</div>
+	</div>
+
+
+{% endif %}
+
+
+<script>
+	// Set heights of progress bars on load with animation
+	window.addEventListener("load", function() {
+		document.getElementById("fill1").style.height = document.getElementById("fill1").getAttribute("data-height");
+		document.getElementById("fill2").style.height = document.getElementById("fill2").getAttribute("data-height");
+		document.getElementById("fill3").style.height = document.getElementById("fill3").getAttribute("data-height");
+
+		setTimeout(
+            // Scroll to bottom function
+            function scrollToBottom() {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+            ,300); // Delay scrolling
+	});
+</script>
+
+
 
 
 {% endblock %}
