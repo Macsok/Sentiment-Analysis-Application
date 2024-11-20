@@ -27,19 +27,7 @@ def pepe():
     return render_template("pepe.html")
   
 
-@app.route("/allcommentsreview", methods=["GET", "POST"])
-def allcommentsreview():
-    if request.method == "POST":
-        text = request.form["textinput"]
-        print(text)
-        score = str(len(text)) + '%'
-        return render_template("allcommentsreview.html", textinput=text, score=score)
-    else:
-        return render_template("allcommentsreview.html")
-
-      
 @app.route("/singlereview", methods=["GET", "POST"])
-
 def singlereview():
     if request.method == "POST":
 
@@ -49,24 +37,13 @@ def singlereview():
         scores = analyses.default_analysis(text)
         sentiment = analyses.get_sentiment(scores[3])
         end = time.time()
-        adbreak = 15;
+        adbreak = 15
         wait_time = max(0, (adbreak - (end - start)) * 1000)
 
         return render_template("singlereview-new.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
                                negative=scores[1]*100, neutral=scores[2]*100, language=scores[4].upper(), text=scores[5], wait_time=wait_time)
     else:
         return render_template("singlereview-new.html", wait_time=0)
-
-      
-@app.route("/wordreview", methods=["GET", "POST"])
-def wordreview():
-    if request.method == "POST":
-        text = request.form["textinput"]
-        print(text)
-        score = str(len(text)) + '%'
-        return render_template("wordreview.html", textinput=text, score=score)
-    else:
-        return render_template("wordreview.html")
 
 
 @app.route("/contact")
@@ -78,20 +55,16 @@ def contact():
 def contribute():
     return render_template("contribute.html")
 
-  
-@app.route("/logo")
-def logo():
-    return render_template("logo.html")
 
-  
-@app.route("/review")
-def review():
-    return render_template("review.html")
-
-
-@app.route("/calc", methods=['GET', 'POST'])
-def calc():
-    result = None
+@app.route("/x", methods=["GET", "POST"])
+def x_twitter():
+    if request.method == "POST":
+        text = request.form["textinput"]
+        print(text)
+        score = str(len(text)) + '%'
+        return render_template("wordreview.html", textinput=text, score=score)
+    else:
+        return render_template("wordreview.html")
     
     
 #------------------------------------------------------------
@@ -111,20 +84,6 @@ def baseForm():
     return render_template('form.html')
 """
 #------------------------------------------------------------
-
-import random
-from flask import jsonify
-
-@app.route('/fetch')
-def js_fetch():
-    return render_template('js-fetch.html')
-
-# Trasa dla danych słupków progresu
-@app.route('/progress')
-def get_progress():
-    # Generowanie losowych wartości progresu
-    # progress_values = analyses.analyseText()
-    return jsonify([1, 0.5, 0.2])
 
 
 #------------------------------------------------------------
