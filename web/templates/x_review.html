@@ -5,63 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Row Updates (SSE)</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 1vw;
-        }
         #output {
-            font-family: Arial, sans-serif;
-            margin-top: 1vw;
+            display: flex;
+            flex-direction: column;
         }
+
+        
+
         /* Language box style */
         .row {
-            width: 90%;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch; /* Sprawia, że dzieci mają tę samą wysokość */
+            width: 95%;
             margin: auto;
-            padding: 10px;
+            padding: 2px;
             border-radius: 8px;
-            text-align: center;
-            font-size: 1.2rem;
-            /* font-weight: bold; */
-            /* margin-bottom: 3vw; */
-            margin-top: 1vw;
-            /* background-color: #393939; */
+            font-size: 1rem;
             color: white;
+            margin-top: 0.5vw;
         }
-        .row.positive {
+
+
+        .stats{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 30%;
+            padding: 10px; /* Dostosowano padding */
+            background-color: #524fce;
+            border-radius: 8px;
+            padding: 8px;
+            margin-left: 10px;
+
+        }
+
+        .comment{
+            width: 70%;
+            padding: 10px;
+            margin-left: 5px;
+            border-radius: 8px;
+            padding: 8px;
+
+        }
+
+        .comment.positive {
             background-color: #4aa54d;
         }
 
-        .row.negative {
+        .comment.negative {
             background-color: #ba1f1f;
         }
 
-        .row.neutral {
+        .comment.neutral {
             background-color: #3888e3;
         }
 
         .final-message {
             width: 90%;
             margin: auto;
-            padding: 10px;
             border-radius: 8px;
             text-align: center;
             font-size: 1.2rem;
             /* font-weight: bold; */
             /* margin-bottom: 3vw; */
             margin-top: 2vw;
+            padding-top: 10px;
+            padding-bottom: 10px;
             background-color: #524646b9;
             color: white;
         }
-        p {
-            display: flex;
-            justify-content: space-between;
-        }
+
+
     </style>
 {% endblock %}
 
 {% block content %}
 
-    <h1>Dynamic Row Updates (Length Calculation)</h1>
+    <h2>Dynamic Row Updates (Length Calculation)</h2>
     <div id="output"></div>
 
     <script>
@@ -96,11 +119,16 @@
             newRow.style.backgroundColor = resultData.color;
             // Insert the text content, author, and score received from the server
             newRow.innerHTML = `
-                <div class="row ${resultData.color_type}">
-                <p><span><strong>Author:</strong> ${resultData.author}</span>
-                <span><strong>Original language:</strong> ${resultData.language}</span></p>
-                <strong>Comment:</strong> ${resultData.text} <br><br>
-                <span><strong>Score:</strong> ${resultData.compound}</span>
+                <div class="row">
+                    <div class="comment ${resultData.color_type}">
+                        <strong>Comment:</strong> ${resultData.text} <br><br>
+                    </div>
+
+                    <div class="stats">
+                        <span style="padding-top:10px;"><strong>Author:</strong> ${resultData.author}</span>
+                        <span style="padding-top:10px;"><strong>Original language:</strong> ${resultData.language}</span>
+                        <span style="padding-top:10px; padding-bottom:10px;"><strong>Score:</strong> ${resultData.compound}</span>
+                    </div>
                 </div>
             `;
             container.appendChild(newRow);
