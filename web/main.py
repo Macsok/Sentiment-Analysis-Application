@@ -49,7 +49,7 @@ def singlereview():
         scores = analyses.default_analysis(text)
         sentiment = analyses.get_sentiment(scores[3])
         end = time.time()
-        adbreak = 15;
+        adbreak = 5;
         wait_time = max(0, (adbreak - (end - start)) * 1000)
 
         return render_template("singlereview-new.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 

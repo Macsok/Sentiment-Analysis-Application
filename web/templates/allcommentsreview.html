@@ -5,20 +5,12 @@
 
 {% block content %}
 
-	<h1>hello from all comments reviewer	</h1>
+	<h1>Select a page from the list</h1>
 
-	<div id="word">
-		<form action="/allcommentsreview" method="POST">
-			Enter the word you want to check
-			<br>
-			<input type="text" id="textinput" name="textinput" value="{{ textinput }}">
-			<br>
-			<input type="submit">
-		</form>
-	</div>
-
-    {% if score %}
-    <p>Your text is <span id="score" value="{{ score }}">{{ score }}</span> positive.</p>
-    {% endif %}
+	<select>
+		<option>Amazon</option>
+		<option>X  &#40;Twitter&#41;</option>
+		<option>YouTube</option>
+	</select>
 
 {% endblock %}
