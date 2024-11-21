@@ -64,10 +64,14 @@ def stream():
     return Response(sseStream.x_generate_sse(csv_file_path), content_type='text/event-stream')
 
 
-@app.route('/x_review')
+@app.route('/x_review', methods=["GET", "POST"])
 def x_review():
-    return render_template('x_review.html')
-    
+    if request.method == "POST":
+        url = request.form["textinput"]
+        task_done = True
+        return render_template('x_review.html', textinput=url, task_done=task_done)
+    else:
+        return render_template('x_review.html')    
     
 #------------------------------------------------------------
 # Testing
