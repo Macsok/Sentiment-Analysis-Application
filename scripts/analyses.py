@@ -97,5 +97,3 @@ def default_analysis(text: str = ''):
     # Scores for translated text
     scores = sia.polarity_scores(text)
     return scores['pos'], scores['neg'], scores['neu'], scores['compound'], language, text
-
-

@@ -5,6 +5,7 @@ import time
 sys.path.append(os.path.join(os.path.dirname(__file__), '../scripts'))
 import analyses
 import sseStream
+import xScrape
 
 
 app = Flask(__name__)
@@ -71,7 +72,21 @@ def x_review():
         task_done = True
         return render_template('x_review.html', textinput=url, task_done=task_done)
     else:
-        return render_template('x_review.html')    
+        return render_template('x_review.html')
+    
+@app.route('/start_scraping', methods=["POST"])
+def start_scraping_route():
+    data = request.get_json()
+    url = data.get('url')
+    if url:
+        start_scraping(url)
+        return jsonify(success=True)
+    return jsonify(success=False)
+
+def start_scraping(url):
+    # Implement the scraping logic here
+    print('scraping...')
+    
     
 #------------------------------------------------------------
 # Testing

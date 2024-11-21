@@ -224,5 +224,5 @@ async def get_replies(url) -> list:
 
 
 # Running the main asynchronous function and capturing returned replies
-url = input("Enter the URL of the post on X.com: ")
-asyncio.run(get_replies(url))
+# url = input("Enter the URL of the post on X.com: ")
+# asyncio.run(get_replies(url))

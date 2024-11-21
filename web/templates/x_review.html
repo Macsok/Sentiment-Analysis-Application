@@ -175,6 +175,28 @@
             eventSource.close();
         };
     }
+
+    function startScrapingAndStream() {
+        const url = document.getElementById("textinput").value;
+        fetch('/start_scraping', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: url }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                runStream();
+            } else {
+                console.error("Scraping failed");
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
 </script>
 
 {% endblock %}
@@ -184,12 +206,12 @@
     <h2>Dynamic Row Updates (Length Calculation)</h2>
 
     <div id="word">
-        <form action="/x_review" method="POST" id="textForm">
+        <form action="javascript:void(0);" method="POST" id="textForm" onsubmit="startScrapingAndStream();">
             <label for="textinput">Enter the website's url you want to analyse:</label>
             <br>
             <textarea id="textinput" name="textinput" placeholder="Your url..." required>{{ textinput }}</textarea>
             <br>
-            <button type="submit" onclick="runStream();">Submit</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
 
