@@ -3,7 +3,6 @@
 {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Row Updates (SSE)</title>
     <style>
         #output {
             display: flex;
@@ -19,7 +18,7 @@
             margin: auto;
             padding: 2px;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: white;
             margin-top: 0.5vw;
         }
@@ -77,6 +76,34 @@
             color: white;
         }
         
+        .bar-container {
+            display: flex;
+            justify-content: space-around;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        .bar {
+            width: 30%;
+            background-color: #ccc;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+        }
+
+        .bar.positive {
+            background-color: #4aa54d;
+        }
+
+        .bar.negative {
+            background-color: #ba1f1f;
+        }
+
+        .bar.neutral {
+            background-color: #3888e3;
+        }
+
         button {
             background-color: #4CAF50;
             color: white;
@@ -125,11 +152,85 @@
             justify-content: center;
             margin-top: 10px;
         }
+        <!--
+            
+            -->
+        /* Progress bar container styling */
+        .progress-container {
+            display: flex;
+            gap: 5vw;
+            margin-top: 3vw;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* Styling for each progress bar */
+        .progress-bar {
+            width: 100px;
+            height: 300px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dynamic fill for each progress bar */
+        .progress-bar-fill {
+            width: 100%;
+            height: 0;
+            position: absolute;
+            bottom: 0;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 5px;
+            transition: height 2s ease-out;
+        }
+        /* Colors for each sentiment */
+        .positive_bar { 
+            background-color: #4aa54d; 
+            color: #333;
+        }
+        .negative_bar { 
+            background-color: #ba1f1f; 
+            color: #333;
+        }
+        .neutral_bar { 
+            background-color: #3888e3; 
+            color: #333;
+        }
+        p {
+            text-align: center;
+        }
+
     </style>
 
 
 <script>
-
+    function initializeProgressBars() {
+        // Set heights of progress bars on load with animation
+        // window.addEventListener("load", function() {
+        document.getElementById("fill1").style.height = document.getElementById("fill1").getAttribute("data-height");
+        document.getElementById("fill2").style.height = document.getElementById("fill2").getAttribute("data-height");
+        document.getElementById("fill3").style.height = document.getElementById("fill3").getAttribute("data-height");
+        document.getElementById("fill1").style.height = 50 + "%";
+        console.log("Progress bars initialized");
+        setTimeout(
+            // Scroll to bottom function
+            function scrollToBottom() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+            }
+            ,300); // Delay scrolling
+        // });
+    }
+    
     function runStream(){
         // Establish a connection to the SSE endpoint
         const eventSource = new EventSource("/stream");
@@ -144,12 +245,30 @@
             if (resultData.is_final) {
                 // Create a unique final message element
                 const finalMessage = document.createElement("div");
-                finalMessage.className = "final-message";  // Add class for styling
-                finalMessage.textContent = resultData.text;  // Only display the final text
+                // finalMessage.className = "final-message";  // Add class for styling
+                // finalMessage.textContent = resultData.text;  // Only display the final text
+                finalMessage.innerHTML = `
+                <p>All items processed!</p>
+                <p style="color: #575a57;">note: The distribution of words classified into specific categories
+		will result in a neutral text if positive words balance out the negative ones, or if only neutral words are detected.</p>
+                    <h1 style="text-align: center;">Distribution of classified comments</h1>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress1">
+                            <div class="progress-bar-fill positive_bar" id="fill1" data-height="${resultData.mean_pos * 100}%">Positive</div>
+                        </div>
+                        <div class="progress-bar" id="progress2">
+                            <div class="progress-bar-fill negative_bar" id="fill2" data-height="${resultData.mean_neg * 100}%">Negative</div>
+                        </div>
+                        <div class="progress-bar" id="progress3">
+                            <div class="progress-bar-fill neutral_bar" id="fill3" data-height="${resultData.mean_neu * 100}%">Neutral</div>
+                        </div>
+                    </div>
+                    
+                `;
                 container.appendChild(finalMessage);
                 // Scroll down
                 window.scrollTo(0, document.body.scrollHeight);
-
+                initializeProgressBars();
                 // Close the connection
                 eventSource.close();
                 return;  // Stop further processing
@@ -186,11 +305,13 @@
         };
 
         document.getElementById("loading-icon").style.display = "none";
+        document.getElementById("loading-text").style.display = "none";
     }
 
     function startScrapingAndStream() {
         const url = document.getElementById("textinput").value;
         document.getElementById("loading-icon").style.display = "inline-block";
+        document.getElementById("loading-text").style.display = "block";
         fetch('/start_scraping', {
             method: 'POST',
             headers: {
@@ -205,11 +326,13 @@
             } else {
                 console.error("Scraping failed");
                 document.getElementById("loading-icon").style.display = "none";
+                document.getElementById("loading-text").style.display = "none";
             }
         })
         .catch((error) => {
             console.error('Error:', error);
             document.getElementById("loading-icon").style.display = "none";
+            document.getElementById("loading-text").style.display = "none";
         });
     }
 </script>
@@ -218,7 +341,7 @@
 
 {% block content %}
 
-    <h2>Dynamic Row Updates (Length Calculation)</h2>
+    <h2 style="text-align: center; margin-bottom: 4vw;">X Comments Analyzer</h2>
 
     <div id="word">
         <form action="javascript:void(0);" method="POST" id="textForm" onsubmit="startScrapingAndStream();">
@@ -228,12 +351,15 @@
             <br>
             <button type="submit">Submit</button>
             <div class="loading-icon-container">
-                <img id="loading-icon" class="loading-icon" src="/static/css/img/loading.gif" alt="Loading...">
+                <img id="loading-icon" class="loading-icon" src="/static/css/img/loading.gif" alt="Loading...">   
             </div>
+            <p id="loading-text" style="display: none; text-align: center; margin-top: 1vw;">Scraping data...</p>
         </form>
+        <p style="color: #575a57; margin-top: 5vw;">note: Reviews might be misinterpreted, and translations could miss or alter the original sentiment.</p>    
     </div>
 
     <div id="output"></div>
+    
 
     {% if task_done %}
     <script>
@@ -241,6 +367,10 @@
     </script>
         
     {% endif %}
+
+    <script>
+        
+    </script>
 
 
     

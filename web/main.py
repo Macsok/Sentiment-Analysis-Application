@@ -70,7 +70,10 @@ def x_review():
     if request.method == "POST":
         url = request.form["textinput"]
         task_done = True
-        return render_template('x_review.html', textinput=url, task_done=task_done)
+        return render_template(
+            'x_review.html', 
+            textinput=url, 
+            task_done=task_done)
     else:
         return render_template('x_review.html')
     
@@ -86,6 +89,7 @@ def start_scraping_route():
 
 
 def start_scraping(url):
+    print('Scrapping...')
     xScrape.asyncio.run(xScrape.get_replies(url))
     
     
