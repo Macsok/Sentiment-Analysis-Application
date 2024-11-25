@@ -117,7 +117,6 @@ async def extract_replies(replies_data, page, max_replies=150):
         # Check if new replies have loaded by recounting the reply elements
         new_replies_count = await page.locator(reply_selector).count()
         if new_replies_count <= replies_count:
-            # If no new replies were loaded (count has not increased), break the loop to stop scrolling
             await page.mouse.wheel(0, 150000)  # Scroll down by simulating mouse wheel movement
             await page.wait_for_timeout(10000)
             new_replies_count = await page.locator(reply_selector).count()
@@ -125,6 +124,7 @@ async def extract_replies(replies_data, page, max_replies=150):
                 await page.mouse.wheel(0, 150000)  # Scroll down by simulating mouse wheel movement
                 await page.wait_for_timeout(10000)
                 new_replies_count = await page.locator(reply_selector).count()
+                # If no new replies were loaded (count has not increased), break the loop to stop scrolling
                 if new_replies_count <= replies_count:
                     break
 
