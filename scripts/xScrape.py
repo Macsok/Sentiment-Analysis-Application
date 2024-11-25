@@ -2,6 +2,7 @@ import asyncio
 import csv
 from playwright.async_api import async_playwright, TimeoutError
 import re
+import os
 
 # User credentials for login
 username = "dwadwadwaw11384"
@@ -156,7 +157,9 @@ async def run(playwright, url) -> list:
 
         # Extract replies and save them to CSV
         await extract_replies(replies_data, page)
-        save_data_to_csv(replies_data, "X_Replies.csv")
+        save_data_to_csv(
+            replies_data,
+            os.path.join(os.path.dirname(__file__), "../web/comm/X_replies.csv"))
 
         # Close both the browser context and browser session to clear session data and isolate state
         await context.close()

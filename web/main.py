@@ -61,7 +61,7 @@ def stream():
     """
     This route streams the server-sent events (SSE) to the frontend.
     """
-    csv_file_path = os.path.join(os.path.dirname(__file__), 'data.csv')
+    csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/X_replies.csv')
     return Response(sseStream.x_generate_sse(csv_file_path), content_type='text/event-stream')
 
 
@@ -74,6 +74,7 @@ def x_review():
     else:
         return render_template('x_review.html')
     
+
 @app.route('/start_scraping', methods=["POST"])
 def start_scraping_route():
     data = request.get_json()
@@ -83,10 +84,9 @@ def start_scraping_route():
         return jsonify(success=True)
     return jsonify(success=False)
 
+
 def start_scraping(url):
-    # Implement the scraping logic here
-    time.sleep(5)
-    print('scraping...')
+    xScrape.asyncio.run(xScrape.get_replies(url))
     
     
 #------------------------------------------------------------
