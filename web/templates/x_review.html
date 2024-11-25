@@ -115,6 +115,16 @@
             border-color: #4a90e2;
         }
 
+        .loading-icon {
+            display: none;
+            margin-left: 10px;
+        }
+
+        .loading-icon-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
     </style>
 
 
@@ -174,10 +184,13 @@
             console.error("Error receiving SSE:", event);
             eventSource.close();
         };
+
+        document.getElementById("loading-icon").style.display = "none";
     }
 
     function startScrapingAndStream() {
         const url = document.getElementById("textinput").value;
+        document.getElementById("loading-icon").style.display = "inline-block";
         fetch('/start_scraping', {
             method: 'POST',
             headers: {
@@ -191,10 +204,12 @@
                 runStream();
             } else {
                 console.error("Scraping failed");
+                document.getElementById("loading-icon").style.display = "none";
             }
         })
         .catch((error) => {
             console.error('Error:', error);
+            document.getElementById("loading-icon").style.display = "none";
         });
     }
 </script>
@@ -212,6 +227,9 @@
             <textarea id="textinput" name="textinput" placeholder="Your url..." required>{{ textinput }}</textarea>
             <br>
             <button type="submit">Submit</button>
+            <div class="loading-icon-container">
+                <img id="loading-icon" class="loading-icon" src="/static/css/img/loading.gif" alt="Loading...">
+            </div>
         </form>
     </div>
 

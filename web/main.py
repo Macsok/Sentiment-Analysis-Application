@@ -85,6 +85,7 @@ def start_scraping_route():
 
 def start_scraping(url):
     # Implement the scraping logic here
+    time.sleep(5)
     print('scraping...')
     
     
