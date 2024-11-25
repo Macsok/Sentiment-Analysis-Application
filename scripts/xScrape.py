@@ -2,12 +2,11 @@ import asyncio
 import csv
 from playwright.async_api import async_playwright, TimeoutError
 import re
-import os
 
 # User credentials for login
 username = "dwadwadwaw11384"
 password = "password12345"
-
+email= "kubah1121@wp.pl"
 
 async def login_to_x(page, username: str, password: str):
     """
@@ -29,14 +28,20 @@ async def login_to_x(page, username: str, password: str):
 
     # Retry filling the username in case of an additional prompt
     try:
-        await page.wait_for_selector("input[name='text']", timeout=5000)
+        await page.wait_for_selector("input[name='text']", timeout=2500)
         await page.fill(username_section, username)
         await page.press(username_section, "Enter")
     except TimeoutError:
         print("No second username prompt.")
 
+    try:
+        await page.wait_for_selector("input[name='text']", timeout=2500)
+        await page.fill(username_section, email)
+        await page.press(username_section, "Enter")
+    except TimeoutError:
+        print("No second username prompt.")
     # Enter the password and continue
-    await page.wait_for_selector("input[name='password']", timeout=1000)
+    await page.wait_for_selector("input[name='password']", timeout=2500)
     await page.fill(password_section, password)
     await page.press(password_section, "Enter")
 
@@ -45,7 +50,7 @@ async def login_to_x(page, username: str, password: str):
     print("Logged in successfully.")
 
 
-async def extract_replies(replies_data, page, max_replies=200):
+async def extract_replies(replies_data, page, max_replies=100):
     """
     Extracts replies from a specific post on X.com. Returns list of retrieved replies in cvs format, each entry has username and a text of the reply.
 
@@ -106,14 +111,22 @@ async def extract_replies(replies_data, page, max_replies=200):
                     break
 
         # Scroll down to load more replies, assuming more are dynamically loaded as we scroll
-        await page.mouse.wheel(0, 1000)  # Scroll down by simulating mouse wheel movement
-        await page.wait_for_timeout(5000)  # Wait 10 seconds to give time for new replies to load
+        await page.mouse.wheel(0, 150000)  # Scroll down by simulating mouse wheel movement
+        await page.wait_for_timeout(10000)  # Wait 5 seconds to give time for new replies to load
 
         # Check if new replies have loaded by recounting the reply elements
         new_replies_count = await page.locator(reply_selector).count()
         if new_replies_count <= replies_count:
             # If no new replies were loaded (count has not increased), break the loop to stop scrolling
-            break
+            await page.mouse.wheel(0, 150000)  # Scroll down by simulating mouse wheel movement
+            await page.wait_for_timeout(10000)
+            new_replies_count = await page.locator(reply_selector).count()
+            if new_replies_count <= replies_count:
+                await page.mouse.wheel(0, 150000)  # Scroll down by simulating mouse wheel movement
+                await page.wait_for_timeout(10000)
+                new_replies_count = await page.locator(reply_selector).count()
+                if new_replies_count <= replies_count:
+                    break
 
     # Return the list of collected replies after reaching the desired count or running out of new replies
     return replies_data
@@ -157,9 +170,8 @@ async def run(playwright, url) -> list:
 
         # Extract replies and save them to CSV
         await extract_replies(replies_data, page)
-        save_data_to_csv(
-            replies_data,
-            os.path.join(os.path.dirname(__file__), "../web/comm/X_replies.csv"))
+        print(len(replies_data))
+        save_data_to_csv(replies_data, "X_Replies.csv")
 
         # Close both the browser context and browser session to clear session data and isolate state
         await context.close()
@@ -180,7 +192,6 @@ def clean_data(data):
     """
     if not data:
         return None  # Return None if data is empty or None
-
     # Remove extra whitespace and strip leading/trailing whitespace
     cleaned_data = " ".join(data.split()).strip()
 
