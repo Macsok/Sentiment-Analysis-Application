@@ -21,17 +21,17 @@ def x_generate_sse(csv_file_path : str):
         neg_list = []
         neu_list = []
         for index, row in dataframe.iterrows():
-            pos, neg, neu, compound, language, text = analyses.default_analysis(row['reply_text'])
+            pos, neg, neu, compound, language, text = analyses.default_analysis(row['comment'])
             compound_list.append(compound)
-            pos_list.append(pos)
-            neg_list.append(neg)
-            neu_list.append(neu)
+            if compound < 0: neg_list.append(pos)
+            elif compound > 0: pos_list.append(neg)
+            else: neu_list.append(neu)
             # Setting color
             if compound < 0: color = 'negative'
             elif compound > 0: color = 'positive'
             else: color = 'neutral'
             result_data = {
-                'author': row['username'],
+                'author': row['author'],
                 'text': text,
                 'compound': compound,
                 'language': language,
@@ -40,11 +40,11 @@ def x_generate_sse(csv_file_path : str):
             }
             result_json = json.dumps(result_data)
             yield f"data: {result_json}\n\n"
-        # Calculate mean values
+        # Calculate distributions
         mean_compound = sum(compound_list) / len(compound_list) if compound_list else 0
-        mean_pos = sum(pos_list) / len(pos_list) if pos_list else 0
-        mean_neg = sum(neg_list) / len(neg_list) if neg_list else 0
-        mean_neu = sum(neu_list) / len(neu_list) if neu_list else 0
+        mean_pos = len(pos_list) / len(compound_list) if pos_list else 0
+        mean_neg = len(neg_list) / len(compound_list) if neg_list else 0
+        mean_neu = len(neu_list) / len(compound_list) if neu_list else 0
         # After the loop, send a final message to signal the end of the stream
         final_message = {
             'text': 'All items processed!',

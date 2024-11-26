@@ -2,9 +2,16 @@ import googleapiclient.discovery  # Import the Google API client library
 import csv
 import re  # Import the regular expressions module for data cleaning
 from typing import List, Dict, Optional  # Import types for type annotations
+import os  # Import the os module to handle file paths
 
-API_KEY: str = 'API_KEY'  # Your API key for YouTube Data API v3
-
+# Read the API key from the file
+try:
+    api_path = os.path.join(os.path.dirname(__file__), '../credentials/YT_API_KEY')
+    with open(api_path) as file:
+        API_KEY: str = file.read().strip()
+except FileNotFoundError:
+    print("API key file not found! Please create a file named 'YT_API_KEY' in the 'credentials' directory.")
+    API_KEY = input("Enter your YouTube Data API key: ").strip()
 
 def get_comments(video_id: str, api_key: str = API_KEY, max_pages: int = 5) -> List[Dict[str, str]]:
     """Fetch comments from a YouTube video using the YouTube Data API v3.
@@ -59,7 +66,10 @@ def get_comments(video_id: str, api_key: str = API_KEY, max_pages: int = 5) -> L
             break
 
     # Uncomment the line below to save the comments to a CSV file
-    save_comments_to_csv(comments, "Youtube_comments.csv")
+    csv_file_path = os.path.join(os.path.dirname(__file__), '../web/comm/YT_replies.csv')
+    # Ensure the CSV file is empty before writing new data to it
+    with open(csv_file_path, 'w') as file: pass    
+    save_comments_to_csv(comments, csv_file_path)
     return comments  # Return the list of comments
 
 

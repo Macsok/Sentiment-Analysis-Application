@@ -2,6 +2,7 @@ import asyncio
 import csv
 from playwright.async_api import async_playwright, TimeoutError
 import re
+import os
 
 # User credentials for login
 username = "dwadwadwaw11384"
@@ -98,10 +99,10 @@ async def extract_replies(replies_data, page, max_replies=150):
             username = clean_data(username)
 
             # Add the reply to the list if both the reply text and username are valid, and if this reply text is unique
-            if reply_text and username and reply_text not in [reply["reply_text"] for reply in replies_data]:
+            if reply_text and username and reply_text not in [reply["comment"] for reply in replies_data]:
                 data_to_save = {
-                    "username": username,
-                    "reply_text": reply_text,
+                    "author": username,
+                    "comment": reply_text,
                 }
                 replies_data.append(data_to_save)  # Add to the list of collected replies
                 loaded_replies_count += 1  # Increment the count of loaded replies
@@ -171,7 +172,10 @@ async def run(playwright, url) -> list:
         # Extract replies and save them to CSV
         await extract_replies(replies_data, page)
         print(len(replies_data))
-        save_data_to_csv(replies_data, "X_Replies.csv")
+        csv_file_path = os.path.join(os.path.dirname(__file__), '../web/comm/X_replies.csv')
+        # Ensure the CSV file is empty before writing new data to it
+        with open(csv_file_path, 'w') as file: pass    
+        save_data_to_csv(replies_data, csv_file_path)
 
         # Close both the browser context and browser session to clear session data and isolate state
         await context.close()
@@ -213,7 +217,7 @@ def save_data_to_csv(replies_data: list, filename: str):
         replies_data (list): A list of dictionaries, each containing 'username' and 'reply_text' keys.
         filename (str): The desired filename for the CSV output.
     """
-    header = ["username", "reply_text"]  # Define the CSV headers
+    header = ["author", "comment"]  # Define the CSV headers
 
     # Open the specified file for writing, with UTF-8 encoding to handle special characters
     with open(filename, "w", newline="", encoding='utf-8') as csvfile:
