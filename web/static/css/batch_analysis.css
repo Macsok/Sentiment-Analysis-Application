@@ -1,0 +1,202 @@
+#output {
+    display: flex;
+    flex-direction: column;
+}        
+
+/* Language box style */
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; /* Sprawia, że dzieci mają tę samą wysokość */
+    width: 95%;
+    margin: auto;
+    padding: 2px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: white;
+    margin-top: 0.5vw;
+}
+
+
+.stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 30%;
+    padding: 10px; /* Dostosowano padding */
+    border-radius: 8px;
+    padding: 8px;
+    margin-left: 10px;
+    color: #fff;
+
+}
+
+.comment{
+    background-color: #535353;
+    width: 70%;
+    padding: 10px;
+    margin-left: 5px;
+    border-radius: 8px;
+    padding: 8px;
+
+}
+
+.stats.positive {
+    background-color: #4aa54d;
+}
+
+.stats.negative {
+    background-color: #ba1f1f;
+}
+
+.stats.neutral {
+    background-color: #3888e3;
+}
+
+.final-message {
+    width: 90%;
+    margin: auto;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+    /* font-weight: bold; */
+    /* margin-bottom: 3vw; */
+    margin-top: 2vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #524646b9;
+    color: white;
+}
+
+.bar-container {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.bar {
+    width: 30%;
+    background-color: #ccc;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+}
+
+.bar.positive {
+    background-color: #4aa54d;
+}
+
+.bar.negative {
+    background-color: #ba1f1f;
+}
+
+.bar.neutral {
+    background-color: #3888e3;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-right: 91%;
+    position: relative;
+}
+
+button:hover {
+    background-color: #326b35;
+}
+
+textarea {
+    width: 98%;
+    min-height: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #a1a1a1;
+    background-color: #e0e0e0;
+    font-size: 1rem;
+    color: #333;
+    transition: background-color 0.3s ease;
+    resize: none;
+    margin-top: 1vw;
+}
+
+textarea:focus {
+    background-color: #d1e7fd;
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.loading-icon {
+    display: none;
+    margin-left: 10px;
+}
+
+.loading-icon-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+<!--
+    
+    -->
+/* Progress bar container styling */
+.progress-container {
+    display: flex;
+    gap: 5vw;
+    margin-top: 3vw;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+/* Styling for each progress bar */
+.progress-bar {
+    width: 100px;
+    height: 300px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dynamic fill for each progress bar */
+.progress-bar-fill {
+    width: 100%;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 5px;
+    transition: height 2s ease-out;
+}
+/* Colors for each sentiment */
+.positive_bar { 
+    background-color: #4aa54d; 
+    color: #333;
+}
+.negative_bar { 
+    background-color: #ba1f1f; 
+    color: #333;
+}
+.neutral_bar { 
+    background-color: #3888e3; 
+    color: #333;
+}
+p {
+    text-align: center;
+}

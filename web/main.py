@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, Response, jsonify
+from flask import Flask, render_template, request, Response, jsonify
 import sys
 import os
 import time
@@ -82,17 +82,14 @@ def x_review():
 def start_scraping_route():
     data = request.get_json()
     url = data.get('url')
-    if url:
-        start_scraping(url)
-        return jsonify(success=True)
+    file = data.get('file')
+    if url and file == 'x_review':
+        print("Scraping from X...")
+        # xScrape.scrap_and_save(url)
+        return jsonify(success=True, file=file)
     return jsonify(success=False)
 
 
-def start_scraping(url):
-    print('Scrapping...')
-    xScrape.asyncio.run(xScrape.get_replies(url))
-    
-    
 #------------------------------------------------------------
 # Testing
 #------------------------------------------------------------
@@ -110,26 +107,6 @@ def baseForm():
     return render_template('form.html')
 """
 #------------------------------------------------------------
-# import random
-# from flask_cors import CORS
-# from flask import jsonify, send_from_directory
-
-# CORS(app)
-
-# @app.route('/get-data', methods=['GET'])
-# def get_data():
-#     """
-#     Simulates a backend function generating random data.
-#     """
-#     random_number = random.randint(1, 100)  # Simulated data
-#     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-#     data = {"message": f"Random Number: {random_number}", "timestamp": timestamp}
-#     return jsonify(data)
-
-
-# @app.route('/x_review')
-# def x_review():
-#     return render_template('x_review.html')
 
 #------------------------------------------------------------
 

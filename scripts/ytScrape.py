@@ -119,6 +119,17 @@ def save_comments_to_csv(comments: List[Dict[str, str]], filename: str) -> None:
         writer.writerows(comments)
 
 
-# Example usage
-VIDEO_ID: str = input("Give YouTube video ID: ")  # The YouTube video ID you want to retrieve comments from
-get_comments(VIDEO_ID, API_KEY)
+def scrap_and_save(video_id: str):
+    """
+    Scrapes comments from a YouTube video and saves them.
+
+    Args:
+        video_id (str): The ID of the YouTube video to scrape comments from.
+
+    Returns:
+        int: Returns 0 upon successful completion.
+    """
+    print(f"Scraping comments for video ID: {video_id}")
+    global API_KEY
+    get_comments(video_id, API_KEY)
+    return 0

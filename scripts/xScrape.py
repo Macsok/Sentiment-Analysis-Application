@@ -241,6 +241,16 @@ async def get_replies(url) -> list:
         return await run(playwright, url)
 
 
-# Running the main asynchronous function and capturing returned replies
-# url = input("Enter the URL of the post on X.com: ")
-# asyncio.run(get_replies(url))
+def scrap_and_save(url: str):
+    """
+    Scrapes replies from the given URL on X.com and saves the results to a CSV file.
+
+    Args:
+        url (str): The URL of the post to scrape replies from.
+
+    Returns:
+        int: Returns 0 upon successful completion.
+    """
+    print('Starting...')
+    asyncio.run(get_replies(url))
+    return 0
