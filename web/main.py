@@ -5,7 +5,8 @@ import time
 sys.path.append(os.path.join(os.path.dirname(__file__), '../scripts'))
 import analyses
 import sseStream
-import xScrape
+import scraperX
+import scraperYT
 
 
 app = Flask(__name__)
@@ -15,7 +16,6 @@ app = Flask(__name__)
 @app.route("/home")
 @app.route("/")
 def home():
-    # Landing page
     return render_template("home.html")
 
 
@@ -55,15 +55,22 @@ def contact():
 def contribute():
     return render_template("contribute.html")
 
-
+stream_to = None
 @app.route("/stream")
 def stream():
     """
     This route streams the server-sent events (SSE) to the frontend.
     """
-    csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/X_replies.csv')
-    return Response(sseStream.x_generate_sse(csv_file_path), content_type='text/event-stream')
-
+    global stream_to
+    if stream_to == 'x':
+        csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/X_replies.csv')
+        return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')
+    if stream_to == 'yt':
+        csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/YT_replies.csv')
+        return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')    
+    if stream_to == 'amazon':
+        csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/Amazon_replies.csv')
+        return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')
 
 @app.route('/x_review', methods=["GET", "POST"])
 def x_review():
@@ -78,14 +85,39 @@ def x_review():
         return render_template('x_review.html')
     
 
+@app.route('/yt_review', methods=["GET", "POST"])
+def yt_review():
+    if request.method == "POST":
+        url = request.form["textinput"]
+        task_done = True
+        return render_template(
+            'yt_review.html', 
+            textinput=url, 
+            task_done=task_done)
+    else:
+        return render_template('yt_review.html')
+    
+
 @app.route('/start_scraping', methods=["POST"])
 def start_scraping_route():
+    global stream_to
     data = request.get_json()
     url = data.get('url')
     file = data.get('file')
     if url and file == 'x_review':
         print("Scraping from X...")
-        # xScrape.scrap_and_save(url)
+        stream_to = 'x'
+        scraperX.scrap_and_save(url)
+        return jsonify(success=True, file=file)
+    if url and file == 'yt_review':
+        print("Scraping from YT...")
+        stream_to = 'yt'
+        scraperYT.scrap_and_save(url)
+        return jsonify(success=True, file=file)
+    if url and file == 'amazon_review':
+        print("Scraping from Amazon...")
+        stream_to = 'amazon'
+        pass
         return jsonify(success=True, file=file)
     return jsonify(success=False)
 

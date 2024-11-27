@@ -5,7 +5,7 @@ import analyses
 import pandas as pd
 
 
-def x_generate_sse(csv_file_path : str):
+def generate_sse(csv_file_path : str):
     """
     Reads a CSV file, processes each row with a function, and returns results.
     """
