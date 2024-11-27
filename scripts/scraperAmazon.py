@@ -2,14 +2,18 @@ import asyncio
 import csv
 from playwright.async_api import async_playwright
 import re
+import os
+
+# Load credentials from file
+credentials_file = os.path.join(os.path.dirname(__file__), '../credentials/AMAZON')
+with open(credentials_file, 'r') as file:
+    username_burner = file.readline().strip()
+    password_burner = file.readline().strip()
+    print(f'Signed in as {username_burner}')
 
 # Prompt the user to input the Amazon product URL for review extraction
 url = input("Enter the Amazon product URL: ")
 max_pagination = 2  # Set the maximum number of review pages to paginate through
-
-# Credentials for logging in to Amazon (placeholder values for demonstration)
-username_burner = "login"
-password_burner = "password"
 
 # Function to log in to Amazon using Playwright
 async def login_to_amazon(page, username: str, password: str) -> None:
@@ -65,12 +69,14 @@ async def extract_data(amazon_reviews_ratings, page) -> list:
     await page.locator(seemore_selector).click()
 
     # Loop through pages of reviews, limited by max_pagination
-    for _ in range(max_pagination):
+    for i in range(max_pagination):
+        print(f'Doing page {i}')
         await page.wait_for_load_state("load")  # Wait until page is fully loaded
 
         # Locate review cards and get the total number of reviews on the current page
         review_cards = page.locator(div_selector)
         cards_count = await review_cards.count()
+        print(f'cards count: {cards_count}')
 
         # Loop through each review card to extract data
         for index in range(cards_count):
@@ -89,9 +95,9 @@ async def extract_data(amazon_reviews_ratings, page) -> list:
 
             # Store the cleaned data in a dictionary format
             data_to_save = {
-                "reviewer_name": name,
-                "review_title": review_title,
-                "review_text": review_text
+                "author": name,
+                "title": review_title,
+                "comment": review_text
             }
             amazon_reviews_ratings.append(data_to_save)  # Add review data to the main list
 
@@ -101,7 +107,9 @@ async def extract_data(amazon_reviews_ratings, page) -> list:
             await next_page.click()
         else:
             break  # Stop if there are no more pages
-
+        print('Done with page') 
+    
+    print('Done extracting reviews!')
     return amazon_reviews_ratings
 
 # Function to initialize browser, log in to Amazon, and extract review data
@@ -130,15 +138,21 @@ async def run(playwright, url) -> None:
 
         # Log in to Amazon and navigate to the product page URL
         await login_to_amazon(page, username_burner, password_burner)
+        print(f"Extracting reviews...")
         await page.goto(url)
 
         # Extract reviews and save them to CSV
         await extract_data(amazon_reviews_ratings, page)
-        save_data_to_csv(amazon_reviews_ratings, "Amazon_Reviews.csv")
+
+        csv_file_path = os.path.join(os.path.dirname(__file__), '../web/comm/Amazon_replies.csv')
+        # Ensure the CSV file is empty before writing new data to it
+        with open(csv_file_path, 'w') as file: pass    
+        save_data_to_csv(amazon_reviews_ratings, csv_file_path)
 
         # Close the browser context and browser after completion
         await context.close()
         await browser.close()
+
 
 # Function to clean extracted text by removing whitespace and non-ASCII characters
 def clean_data(data) -> str|None:
@@ -170,7 +184,7 @@ def save_data_to_csv(reviews_data: list, filename: str) -> None:
     Returns:
         None
     """
-    header = ["reviewer_name", "review_title", "review_text"]  # Define CSV headers for data fields
+    header = ["author", "title", "comment"]  # Define CSV headers for data fields
     with open(filename, "w", newline="", encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=header)
         writer.writeheader()
@@ -191,4 +205,4 @@ async def get_reviews(url) -> None:
         await run(playwright, url)  # Call the main function to run extraction
 
 # Run the asynchronous review extraction process
-asyncio.run(get_reviews(url))
+asyncio.run(get_reviews(str(url)))

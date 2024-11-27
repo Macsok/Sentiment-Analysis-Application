@@ -4,10 +4,17 @@ from playwright.async_api import async_playwright, TimeoutError
 import re
 import os
 
-# User credentials for login
-username = "dwadwadwaw11384"
-password = "password12345"
-email= "kubah1121@wp.pl"
+# Load credentials from file
+credentials_file = os.path.join(os.path.dirname(__file__), '../credentials/X')
+try:
+    with open(credentials_file, 'r') as file:
+        username = file.readline().strip()
+        password = file.readline().strip()
+        email = file.readline().strip()
+        print(f'Signed in as {username}')
+except FileNotFoundError:
+    print("Credentials file not found. Please ensure the file exists and contains valid credentials.")
+    exit(1)
 
 async def login_to_x(page, username: str, password: str):
     """
