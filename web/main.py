@@ -89,6 +89,11 @@ def x_review():
 def yt_review():
     if request.method == "POST":
         url = request.form["textinput"]
+        # https://www.youtube.com/watch?v=XqZsoesa55w&ab_channel=BabyShark-PinkfongKids%E2%80%99Songs%26Stories
+        start = url.find("watch?v=") + len("watch?v=")
+        end = url.find("&ab_channel")
+        id = url[start:end]
+        print(f'\n\n\n YOUR ID IS: {id}\n\n\n')
         task_done = True
         return render_template(
             'yt_review.html', 

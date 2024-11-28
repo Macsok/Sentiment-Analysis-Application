@@ -71,17 +71,21 @@
 
   .team {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: stretch;
-    gap: 20px;
+    gap: 1em;
     margin-bottom: 40px;
     flex: 1;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .column{
     align-items: flex-end;
-    flex: 1 1 280px; 
+    flex: 1; 
+    
 
   }
   
@@ -91,6 +95,7 @@
       display: block;
       height: 100%;
       align-items: stretch;
+      
     }
   }
 
@@ -98,12 +103,15 @@
     display: flex;
     flex-direction: column; 
     justify-content: space-between; 
-    box-shadow: 0 4px 20px 2px rgba(109, 74, 233, 0.1);
+    box-shadow: 0 4px 20px 2px rgba(109, 74, 233, 0.3);
     margin: 8px;
     padding: 0; 
     align-items: stretch;
     overflow: hidden;
     flex: 1;
+    background-color: #3f3f3f;
+    border-radius: 10px;
+    height: 600px;
 }
 
 
@@ -232,22 +240,26 @@
             background-color: #3095d3;
         }
 
-        .gplus
+        .linkedin
         {
             width: 25%;
             padding-bottom: 20px;
             
         }
 
-        .gplus:hover
+        .linkedin:hover
         {
-            background-color: #d95333;
+            background-color: #0e76a8;
         }
 
-        .icon-facebook:before { content: '\e800'; font-size: 40px; } /* '' */
-        .icon-youtube:before { content: '\e801'; font-size: 40px; } /* '' */
-        .icon-twitter:before { content: '\e802'; font-size: 40px; } /* '' */
-        .icon-gplus:before { content: '\e803'; font-size: 40px; } /* '' */
+        .icon-facebook:before { content: '\e800'; font-size: 40px; margin-top: 20px} /* '' */
+        .icon-youtube:before { content: '\e801'; font-size: 40px; margin-top: 20px} /* '' */
+        .icon-twitter:before { content: '\e802'; font-size: 40px; margin-top: 20px} /* '' */
+        .icon-linkedin:before { content: '\f0e1'; font-size: 40px;margin-top: 20px} /* '' */
+
+        .icon-twitter:before { content: '\f099'; font-size: 40px; margin-top: 20px} /* '' */
+        .icon-facebook:before { content: '\f09a'; font-size: 40px; margin-top: 20px} /* '' */
+        .icon-youtube-play:before { content: '\f16a'; font-size: 40px; margin-top: 20px} /* '' */
 
   </style>
 
@@ -260,11 +272,11 @@
 <div class="team">
   <div class="column">
     <div class="card">
-      <img src="{{url_for('static', filename='css/img/maciej.jpg')}}" alt="Maciej" style="width:100%;margin-top: 5px;">
+      <img src="{{url_for('static', filename='css/img/maciej.png')}}" alt="Maciej" style="width:100%;margin-top: 5px;">
       <div class="box">
         <h2>Maciej Sokołowski</h2>
         <p class="title1">CEO</p>
-        <p style="padding-bottom: 25px;">Gold Manager</p>
+        <p>Gold Manager</p>
         <p>manago@sentirew.com</p>
         <p><button class="button">Contact</button></p>
       </div>
@@ -273,7 +285,7 @@
 
   <div class="column">
     <div class="card">
-      <img src="{{url_for('static', filename='css/img/konrad.jpg')}}" alt="Konrad" style="width:100%">
+      <img src="{{url_for('static', filename='css/img/konrad.png')}}" alt="Konrad" style="width:100%">
       <div class="box">
         <h2>Konrad Bąchór</h2>
         <p class="title1">Front-End Developer</p>
@@ -286,7 +298,7 @@
   
   <div class="column">
     <div class="card">
-      <img src="{{url_for('static', filename='css/img/kuba.jpg')}}" alt="Kuba" style="width:100%">
+      <img src="{{url_for('static', filename='css/img/kuba.png')}}" alt="Kuba" style="width:100%">
       <div class="box">
         <h2>Kuba Herka</h2>
         <p class="title1">Back-End Developer</p>
@@ -320,13 +332,13 @@
           <i class="icon-facebook"></i>
       </div>
       <div class="yt">
-          <i class="icon-youtube"></i>
+          <i class="icon-youtube-play"></i>
       </div>
       <div class="tw">
           <i class="icon-twitter"></i>
       </div>
-      <div class="gplus">
-          <i class="icon-gplus"></i>
+      <div class="linkedin">
+          <i class="icon-linkedin"></i>
       </div>
       <div style="clear:both"></div>
   </div>
