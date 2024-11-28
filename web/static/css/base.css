@@ -5,8 +5,8 @@ body{
 	min-height: 100vh;
 	margin: 0;
 	background-image: url("img/background.png");
-    font-size: 1.4em;
-	font-size: ;
+    font-size: 1.3em;
+
     margin: 0px !important;
     color: #ffffff;
 }
@@ -29,7 +29,7 @@ body{
     max-width: 900px;
     height: 100px;
     padding: 0 3px;
-    flex-shrink: 0; /* Zapewnia, że reklama nie zostanie zgnieciona */
+    flex-shrink: 0; 
     margin-bottom: 3px;
 	padding-bottom: 10px;
 	max-height: 640px;
@@ -55,9 +55,9 @@ body{
 }
 
 #bottomad img {
-    width: 100%; /* Ustala szerokość reklamy do 100% kontenera */
-    height: 100px; /* Ustala stałą wysokość reklamy */
-    object-fit: contain; /* Zapobiega deformacji obrazu */
+    width: 100%; 
+    height: 100px; 
+    object-fit: contain; 
 }
 
 #logo{
@@ -198,6 +198,7 @@ ol > li > ul{
 	height: 50px;
 	padding-top: 5px;
 	display: none;
+
 }
 
 ol > li:hover > ul{

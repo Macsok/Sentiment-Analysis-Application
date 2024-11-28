@@ -1,22 +1,335 @@
 {% extends 'base.html' %}
 
 {% block head %}
+
+<!-- Sorce: https://www.w3schools.com/howto/howto_css_about_page.asp -->
+<!-- Sorce: https://miroslawzelent.pl/kurs-html/header-nav-article-section-main-footer/ -->
+
+<style>
+  /* body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+  }
+  
+  html {
+    box-sizing: border-box;
+  } */
+
+  .box {
+  padding: 0 16px;
+}
+
+.box::after, .row::after {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: auto;
+}
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  .column {
+    flex: 1 1 calc(30% - 40px);
+    max-width: 300px;
+    min-width: 250px;
+  }
+  
+
+  
+  .about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+  }
+  
+
+  .title1 {
+    color: grey;
+  }
+  
+
+
+.button {
+    margin-top: auto; 
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #6563FF;
+    text-align: center;
+    cursor: pointer;
+    width: 95%;
+}
+  
+  .button:hover {
+    background-color: #8583FF;
+  }
+
+  .team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex: 1;
+  }
+
+  .column{
+    align-items: flex-end;
+    flex: 1 1 280px; 
+
+  }
+  
+  @media screen and (max-width: 650px) {
+    .column {
+      
+      display: block;
+      height: 100%;
+      align-items: stretch;
+    }
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    box-shadow: 0 4px 20px 2px rgba(109, 74, 233, 0.1);
+    margin: 8px;
+    padding: 0; 
+    align-items: stretch;
+    overflow: hidden;
+    flex: 1;
+}
+
+
+
+  .support {
+    text-align: center;
+    margin: 40px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .coffee-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    color: black;
+  }
+
+  .coffee-button {
+    display: inline-block;
+    background-color: #ff914d;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+  }
+
+  .coffee-button:hover {
+    background-color: #e07a3f;
+  }
+
+  .github-button {
+    background-color: #24292e;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s;
+  }
+
+  .github-button:hover {
+    background-color: #6563FF;
+    transform: scale(1.05);
+  }
+
+  .github-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+
+        .socials        
+        {
+            margin-top: 50px;
+            width:100%;
+            text-align: center;
+            background-color: #191d21;
+            display: flex;
+            flex-direction: row;
+            text-wrap: nowrap;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .socialdivs
+        {
+            display: flex;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        .fb
+        {
+            width: 25%;
+            padding-bottom: 20px;
+            
+            
+        }
+
+        .fb:hover
+        {
+            background-color: #4668b3;
+        }
+
+        .yt
+        {
+            width: 25%;
+            padding-bottom: 20px;
+            
+            
+        }
+
+        .yt:hover
+        {
+            background-color: #d94348;
+        }
+
+        .tw
+        {
+            width: 25%;
+            padding-bottom: 20px;
+            
+            
+        }
+
+        .tw:hover
+        {
+            background-color: #3095d3;
+        }
+
+        .gplus
+        {
+            width: 25%;
+            padding-bottom: 20px;
+            
+        }
+
+        .gplus:hover
+        {
+            background-color: #d95333;
+        }
+
+        .icon-facebook:before { content: '\e800'; font-size: 40px; } /* '' */
+        .icon-youtube:before { content: '\e801'; font-size: 40px; } /* '' */
+        .icon-twitter:before { content: '\e802'; font-size: 40px; } /* '' */
+        .icon-gplus:before { content: '\e803'; font-size: 40px; } /* '' */
+
+  </style>
+
 {% endblock %}
 
 {% block content %}
 
-	<h1>hello from about	</h1>
+<h2 style="text-align:center">Our Team</h2>
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel eros vitae est accumsan fringilla sed eget mauris. Mauris ut metus ut augue posuere mollis. Praesent lorem tellus, porta ut justo eget, volutpat ultrices neque. Morbi ac felis et felis elementum porttitor et pharetra lorem. Nullam sodales velit purus, vel imperdiet erat elementum id. Phasellus sed nunc non elit tempus interdum. Quisque et orci sit amet felis malesuada tincidunt. Praesent a blandit arcu. In posuere sed nibh ut malesuada. Morbi a ex tellus. Nam nisl odio, tempor id pretium non, ultrices sit amet massa. Maecenas dictum massa sed ultricies pellentesque. Integer ut tellus vel ipsum vehicula porttitor quis non mauris. Mauris ac turpis at ligula elementum congue.</p> 
+<div class="team">
+  <div class="column">
+    <div class="card">
+      <img src="{{url_for('static', filename='css/img/maciej.jpg')}}" alt="Maciej" style="width:100%;margin-top: 5px;">
+      <div class="box">
+        <h2>Maciej Sokołowski</h2>
+        <p class="title1">CEO</p>
+        <p style="padding-bottom: 25px;">Gold Manager</p>
+        <p>manago@sentirew.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
 
-    <p>Aenean ultrices aliquet leo, at viverra mi dictum at. Etiam non venenatis lorem. Morbi ac imperdiet lorem. Nulla sed libero nisl. Nunc ornare pulvinar quam a hendrerit. Maecenas aliquet risus vitae nulla tincidunt cursus. Curabitur nec metus tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;</p> 
+  <div class="column">
+    <div class="card">
+      <img src="{{url_for('static', filename='css/img/konrad.jpg')}}" alt="Konrad" style="width:100%">
+      <div class="box">
+        <h2>Konrad Bąchór</h2>
+        <p class="title1">Front-End Developer</p>
+        <p>He made such a nice website</p>
+        <p>front@sentirew.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="card">
+      <img src="{{url_for('static', filename='css/img/kuba.jpg')}}" alt="Kuba" style="width:100%">
+      <div class="box">
+        <h2>Kuba Herka</h2>
+        <p class="title1">Back-End Developer</p>
+        <p>He was the one who made something work here</p>
+        <p>back@sentirew.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <p>Nunc aliquet ex a velit tempor, sed blandit ex mattis. Ut dictum ac ante nec imperdiet. Phasellus sit amet velit sit amet eros lacinia sagittis. Vivamus ornare, magna at sollicitudin suscipit, massa nisl condimentum felis, vel lacinia arcu tortor et justo. Maecenas sapien orci, porttitor vel sem sed, venenatis pharetra elit. Integer nec ipsum dictum nisi varius suscipit. Nam sed hendrerit enim, a cursus lorem. Nam id est nec est elementum pellentesque nec eget purus. Integer nec fermentum nisl.</p> 
+<div class="support">
+    <div class="coffee-container">
+        <p>If you enjoy our work, consider buying us a coffee!</p>
+        <a class="coffee-button" href="https://buymeacoffee.com/" target="_blank">Buy Us Coffee</a>
+    </div>
 
-    <p>Quisque non posuere ipsum. Praesent quis hendrerit ipsum. Nullam ultricies non justo eu sollicitudin. Nulla in enim neque. In nunc sapien, dignissim a ornare et, venenatis eu risus. Donec lobortis sit amet metus nec fringilla. In efficitur, justo ac pulvinar feugiat, magna nisl imperdiet est, eu vehicula metus dui volutpat justo. Proin iaculis vehicula vehicula. Phasellus vel arcu ullamcorper, posuere massa a, sodales quam. Pellentesque in suscipit erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus interdum, risus at scelerisque semper, eros dolor rhoncus felis, vel dapibus arcu ex in mauris. Phasellus risus magna, posuere non tempor nec, sollicitudin quis sapien. Proin quis imperdiet arcu. Vestibulum imperdiet magna convallis ex molestie, nec iaculis velit tincidunt.</p> 
+    <a class="github-button" href="https://github.com/your-repository" target="_blank">
+        <img 
+            class="github-icon" 
+            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" 
+            alt="GitHub Logo">
+        Contribute on GitHub
+    </a>  
+    
+</div>
 
-    <p>Nullam consequat dictum justo eu viverra. Duis vulputate, tellus at malesuada pulvinar, dui turpis congue risus, quis blandit mi lacus placerat massa. Curabitur fringilla vehicula urna. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In gravida nec lectus et congue. Sed malesuada eu ipsum id efficitur. Maecenas nec ex vel massa porttitor consequat id vitae lorem. Integer finibus, ex ac cursus accumsan, nibh massa semper sapien, et dignissim dui eros quis lorem. Curabitur egestas et est sodales porta. Pellentesque vitae maximus mi. Praesent imperdiet pretium laoreet. Praesent et libero vitae sapien mollis maximus. Ut porttitor fermentum dolor non gravida.</p> 
-
-	
+<div class="socials">
+  <div class="socialdivs">
+      <div class="fb">
+          <i class="icon-facebook"></i>
+      </div>
+      <div class="yt">
+          <i class="icon-youtube"></i>
+      </div>
+      <div class="tw">
+          <i class="icon-twitter"></i>
+      </div>
+      <div class="gplus">
+          <i class="icon-gplus"></i>
+      </div>
+      <div style="clear:both"></div>
+  </div>
+</div>
 
 {% endblock %}
