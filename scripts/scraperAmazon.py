@@ -4,13 +4,8 @@ from playwright.async_api import async_playwright
 import re
 import os
 
-# Load credentials from file
-credentials_file = os.path.join(os.path.dirname(__file__), '../credentials/AMAZON')
-with open(credentials_file, 'r') as file:
-    username_burner = file.readline().strip()
-    password_burner = file.readline().strip()
-    print(f'Signed in as {username_burner}')
-
+username_burner = ''
+password_burner = ''
 # Prompt the user to input the Amazon product URL for review extraction
 # url = input("Enter the Amazon product URL: ")
 max_pagination = 8  # Set the maximum number of review pages to paginate through
@@ -201,6 +196,14 @@ async def get_reviews(url) -> None:
     Returns:
         None
     """
+    global username_burner, password_burner
+    # Load credentials from file
+    credentials_file = os.path.join(os.path.dirname(__file__), '../credentials/AMAZON')
+    with open(credentials_file, 'r') as file:
+        username_burner = file.readline().strip()
+        password_burner = file.readline().strip()
+        print(f'Signed in as {username_burner}')
+
     async with async_playwright() as playwright:
         await run(playwright, url)  # Call the main function to run extraction
 

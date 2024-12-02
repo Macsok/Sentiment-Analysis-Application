@@ -4,16 +4,9 @@ import re  # Import the regular expressions module for data cleaning
 from typing import List, Dict, Optional  # Import types for type annotations
 import os  # Import the os module to handle file paths
 
-# Read the API key from the file
-try:
-    api_path = os.path.join(os.path.dirname(__file__), '../credentials/YT_API_KEY')
-    with open(api_path) as file:
-        API_KEY: str = file.read().strip()
-except FileNotFoundError:
-    print("API key file not found! Please create a file named 'YT_API_KEY' in the 'credentials' directory.")
-    API_KEY = input("Enter your YouTube Data API key: ").strip()
+# API_KEY = ''  # Initialize the API key as an empty string
 
-def get_comments(video_id: str, api_key: str = API_KEY, max_pages: int = 5) -> List[Dict[str, str]]:
+def get_comments(video_id: str, api_key: str = '', max_pages: int = 5) -> List[Dict[str, str]]:
     """Fetch comments from a YouTube video using the YouTube Data API v3.
 
     Args:
@@ -129,10 +122,20 @@ def scrap_and_save(video_id: str):
     Returns:
         int: Returns 0 upon successful completion.
     """
+    # global API_KEY
+    # Read the API key from the file
+    try:
+        api_path = os.path.join(os.path.dirname(__file__), '../credentials/YT_API_KEY')
+        with open(api_path) as file:
+            API_KEY: str = file.read().strip()
+    except FileNotFoundError:
+        print("API key file not found! Please create a file named 'YT_API_KEY' in the 'credentials' directory.")
+        API_KEY = input("Enter your YouTube Data API key: ").strip()
+
+    # Extract the video ID from the URL
     start = video_id.find("watch?v=") + len("watch?v=")
     end = video_id.find("&ab_channel") if "&ab_channel" in video_id else len(video_id)
     id = video_id[start:end]
     print(f"Scraping comments for video ID: '{id}'")
-    global API_KEY
     get_comments(id, API_KEY)
     return 0

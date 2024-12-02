@@ -4,17 +4,9 @@ from playwright.async_api import async_playwright, TimeoutError
 import re
 import os
 
-# Load credentials from file
-credentials_file = os.path.join(os.path.dirname(__file__), '../credentials/X')
-try:
-    with open(credentials_file, 'r') as file:
-        username = file.readline().strip()
-        password = file.readline().strip()
-        email = file.readline().strip()
-        print(f'Signed in as {username}')
-except FileNotFoundError:
-    print("Credentials file not found. Please ensure the file exists and contains valid credentials.")
-    exit(1)
+username = ''
+password = ''
+email = ''
 
 async def login_to_x(page, username: str, password: str):
     """
@@ -258,6 +250,18 @@ def scrap_and_save(url: str):
     Returns:
         int: Returns 0 upon successful completion.
     """
+    global username, password, email
+    # Load credentials from file
+    credentials_file = os.path.join(os.path.dirname(__file__), '../credentials/X')
+    try:
+        with open(credentials_file, 'r') as file:
+            username = file.readline().strip()
+            password = file.readline().strip()
+            email = file.readline().strip()
+            print(f'Signed in as {username}')
+    except FileNotFoundError:
+        print("Credentials file not found. Please ensure the file exists and contains valid credentials.")
+        exit(1)
     print('Starting...')
     asyncio.run(get_replies(url))
     return 0
