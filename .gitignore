@@ -5,4 +5,5 @@ web/comm/Amazon_replies.csv
 .idea
 venv
 myvenv
+myenv
 credentials
