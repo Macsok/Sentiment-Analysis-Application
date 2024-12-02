@@ -2,12 +2,12 @@ from flask import Flask, render_template, request, Response, jsonify
 import sys
 import os
 import time
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../scripts'))
 import analyses
 import sseStream
 import scraperX
 import scraperYT
-
 
 app = Flask(__name__)
 
@@ -16,21 +16,25 @@ app = Flask(__name__)
 @app.route("/home")
 @app.route("/")
 def home():
+    """Render the home page."""
     return render_template("home.html")
 
 
 @app.route("/about")
 def about():
+    """Render the about page."""
     return render_template("about.html")
 
 
 @app.route("/pepe")
 def pepe():
+    """Render the pepe page."""
     return render_template("pepe.html")
-  
+
 
 @app.route("/singlereview", methods=["GET", "POST"])
 def singlereview():
+    """Handle single review analysis."""
     if request.method == "POST":
         start = time.time()
         text = request.form["textinput"]
@@ -40,22 +44,36 @@ def singlereview():
         end = time.time()
         adbreak = 15
         wait_time = max(0, (adbreak - (end - start)) * 1000)
-        return render_template("singlereview.html", textinput=text, sentiment=sentiment, positive=scores[0]*100, 
-                               negative=scores[1]*100, neutral=scores[2]*100, language=scores[4].upper(), text=scores[5], wait_time=wait_time)
+        return render_template(
+            "singlereview.html", 
+            textinput=text, 
+            sentiment=sentiment, 
+            positive=scores[0] * 100, 
+            negative=scores[1] * 100, 
+            neutral=scores[2] * 100, 
+            language=scores[4].upper(), 
+            text=scores[5], 
+            wait_time=wait_time
+        )
     else:
         return render_template("singlereview.html", wait_time=0)
 
 
 @app.route("/contact")
 def contact():
+    """Render the contact page."""
     return render_template("contact.html")
 
-  
+
 @app.route("/contribute")
 def contribute():
+    """Render the contribute page."""
     return render_template("contribute.html")
 
+
 stream_to = None
+
+
 @app.route("/stream")
 def stream():
     """
@@ -67,56 +85,60 @@ def stream():
         return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')
     if stream_to == 'yt':
         csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/YT_replies.csv')
-        return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')    
+        return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')
     if stream_to == 'amazon':
         csv_file_path = os.path.join(os.path.dirname(__file__), 'comm/Amazon_replies.csv')
         return Response(sseStream.generate_sse(csv_file_path), content_type='text/event-stream')
 
+
 @app.route('/x_review', methods=["GET", "POST"])
 def x_review():
+    """Handle X review scraping."""
     if request.method == "POST":
         url = request.form["textinput"]
         task_done = True
         return render_template(
             'x_review.html', 
             textinput=url, 
-            task_done=task_done)
+            task_done=task_done
+        )
     else:
         return render_template('x_review.html')
-    
-    
+
+
 @app.route('/amazon_review', methods=["GET", "POST"])
 def amazon_review():
+    """Handle Amazon review scraping."""
     if request.method == "POST":
         url = request.form["textinput"]
         task_done = True
         return render_template(
             'amazon_review.html', 
             textinput=url, 
-            task_done=task_done)
+            task_done=task_done
+        )
     else:
         return render_template('amazon_review.html')
-    
+
 
 @app.route('/yt_review', methods=["GET", "POST"])
 def yt_review():
+    """Handle YouTube review scraping."""
     if request.method == "POST":
         url = request.form["textinput"]
-        start = url.find("watch?v=") + len("watch?v=")
-        end = url.find("&ab_channel")
-        id = url[start:end]
-        print(f'\n\n\n YOUR ID IS: {id}\n\n\n')
         task_done = True
         return render_template(
             'yt_review.html', 
             textinput=url, 
-            task_done=task_done)
+            task_done=task_done
+        )
     else:
         return render_template('yt_review.html')
-    
+
 
 @app.route('/start_scraping', methods=["POST"])
 def start_scraping_route():
+    """Start the scraping process based on the provided URL and file type."""
     global stream_to
     data = request.get_json()
     url = data.get('url')
@@ -137,27 +159,6 @@ def start_scraping_route():
         pass
         return jsonify(success=True, file=file)
     return jsonify(success=False)
-
-
-#------------------------------------------------------------
-# Testing
-#------------------------------------------------------------
-
-# Base form of GET and POST function
-"""
-@app.route('/form', methods=['GET', 'POST'])
-def baseForm():
-    if request.method == 'POST':
-        # Retrieve data from a form
-        user_data = request.form['user_input']
-        # Render site with results
-        return render_template('form.html', user_data=user_data)
-    # Display form site using GET method
-    return render_template('form.html')
-"""
-#------------------------------------------------------------
-
-#------------------------------------------------------------
 
 
 if __name__ == "__main__":
