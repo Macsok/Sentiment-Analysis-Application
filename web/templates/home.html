@@ -1,75 +1,110 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
 <style>
-
-  .welcome-section{
+  .welcome-section {
     margin: 10px;
+    animation: fadeIn 2s ease-in-out;
+    position: relative;
+    z-index: 1;
   }
 
-  .welcome-section strong{
-    color:#6563FF;
+  .welcome-section strong {
+    color: #6563FF;
   }
 
   .cta-buttons {
-      margin-top: 20px;
+    margin-top: 20px;
   }
 
   .button {
-      display: inline-block;
-      background-color: #7170d3;
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      margin: 5px;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
+    display: inline-block;
+    background-color: #7170d3;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
 
   .button:hover {
-      background-color: #7a75ff;
+    background-color: #7a75ff;
+    transform: scale(1.05);
   }
 
   .button.secondary {
-      background-color: #4aa54d;
+    background-color: #4aa54d;
   }
 
   .button.secondary:hover {
-      background-color: #65c26a;
+    background-color: #65c26a;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .background-bars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .bar {
+    position: absolute;
+    bottom: 0;
+    width: 10px;
+    background-color: rgba(113, 112, 211, 0.1);
+    animation: grow 5s infinite ease-in-out;
+  }
+
+  @keyframes grow {
+    0%, 100% { height: 0; }
+    50% { height: 100%; }
+  }
+
+  .welcome-section p {
+    transition: color 0.3s ease;
+  }
+
+  .welcome-section p:hover {
+    color: #7a75ff;
   }
 </style>
-
 {% endblock %}
 
 {% block content %}
+<div class="background-bars">
+  {% for i in range(50) %}
+  <div class="bar" style="left: {{ i * 2 }}%; animation-delay: {{ i * 0.1 }}s;"></div>
+  {% endfor %}
+</div>
 
 <div class="welcome-section">
-  <h1>Welcome to Comment Reviewer</h1>
+  <h1 style="text-align: center;">Welcome to Comment Reviewer</h1>
   <p>Welcome to Comment Reviewer, a powerful tool for analyzing the sentiment of comments from popular platforms like <strong>YouTube</strong>, <strong>Amazon</strong>, and <strong>X</strong>. Whether you're a creator, seller, or casual user, our platform helps you uncover valuable insights about how people perceive your content, products, or posts.</p>
 
-  <p>Using advanced scrapers and an AI-powered sentiment analysis model, Comment Reviewer assigns sentiment scores ranging from <strong>-1</strong> (highly negative) to <strong>1</strong> (highly positive), with scores near 0 indicating neutral sentiment. Our <strong>single review feature</strong> allows you to evaluate a comment before posting it online, giving you a better understanding of its tone and potential impact.</p>
+  <p>Using advanced scrapers and an AI-powered sentiment analysis model, Comment Reviewer assigns sentiment scores ranging from <strong>-1</strong> (highly negative) to <strong>1</strong> (highly positive), with scores near 0 indicating neutral sentiment. Our <strong>single review feature</strong> allows you to evaluate a comment before posting it online, giving you a better understanding of its tone and potential impact. This feature is particularly useful for content creators and social media managers who want to ensure their messages are well-received by their audience.</p>
   
-  <p><strong>YouTube:</strong> Discover what people think about your video or check out its reviews before you watch it. Understand the sentiment behind the comments on your channel to gain insights into your audience's reactions.</p>
+  <p><strong>YouTube:</strong> Discover what people think about your video or check out its reviews before you watch it. Understand the sentiment behind the comments on your channel to gain insights into your audience's reactions. This can help you tailor your content to better meet the expectations and preferences of your viewers, ultimately leading to higher engagement and satisfaction.</p>
   
-  <p><strong>Amazon:</strong> Analyze the reviews of your product to gauge customer satisfaction, or evaluate feedback before making a purchase decision. Ensure you're fully informed about the product’s strengths and weaknesses.</p>
+  <p><strong>Amazon:</strong> Analyze the reviews of your product to gauge customer satisfaction, or evaluate feedback before making a purchase decision. Ensure you're fully informed about the product’s strengths and weaknesses. By understanding the sentiment of customer reviews, you can identify areas for improvement and highlight the positive aspects of your products in your marketing efforts.</p>
   
-  <p><strong>X:</strong> Explore how the community feels about a specific post that interests you. Whether it's a trending topic, a breaking news post, or a personal update, our tool helps you assess public opinion at a glance.</p> 
+  <p><strong>X:</strong> Explore how the community feels about a specific post that interests you. Whether it's a trending topic, a breaking news post, or a personal update, our tool helps you assess public opinion at a glance. This can be invaluable for staying informed about the latest trends and gauging the public's reaction to various events and announcements.</p> 
   
-  
-  <p>With Comment Reviewer, you can explore and understand the opinions of others, helping you make informed decisions based on public sentiment.</p>
+  <p>With Comment Reviewer, you can explore and understand the opinions of others, helping you make informed decisions based on public sentiment. Our platform provides you with the tools you need to navigate the complex landscape of online comments and reviews, empowering you to make data-driven decisions that enhance your online presence and reputation.</p>
 
-  <p><strong>Don’t wait!</strong> Test our service now by trying out the <strong>Single Review</strong> feature. This tool allows you to quickly analyze how your potential comment might be perceived before posting it online. Get immediate feedback from our model and ensure your comment conveys the right tone.</p>
-    
-
+  <p><strong>Don’t wait!</strong> Test our service now by trying out the <strong>Single Review</strong> feature. This tool allows you to quickly analyze how your potential comment might be perceived before posting it online. Get immediate feedback from our model and ensure your comment conveys the right tone. Whether you're responding to a customer review, engaging with your audience on social media, or crafting a new post, our Single Review feature helps you communicate more effectively.</p>
+  
   <div class="cta-buttons">
     <a href="/singlereview" class="button">Live Review</a>
   </div>
 </div>
-
-
-
-	
-
 {% endblock %}
