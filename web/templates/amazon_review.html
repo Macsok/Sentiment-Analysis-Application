@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/batch_analysis.css')}}">
+{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center; margin-bottom: 4vw;">Amazon Comments Analyzer</h2>
+
+<div id="word">
+    <form action="javascript:void(0);" method="POST" id="textForm" onsubmit="startScrapingAndStream('amazon_review');">
+        <label for="textisnput">Enter the product's url you want to analyse (note, it must be from: amazon.com):</label>
+        <br>
+        <textarea id="textinput" name="textinput" placeholder="Your product's url..." required>{{ textinput }}</textarea>
+        <br>
+        <button type="submit">Submit</button>
+        <div class="loading-icon-container">
+            <img id="loading-icon" class="loading-icon" src="/static/css/img/loading.gif" alt="Loading...">   
+        </div>
+        <p id="loading-text" style="display: none; text-align: center; margin-top: 1vw;">Scraping data...</p>
+    </form>
+    <p style="color: #575a57; margin-top: 5vw;">note: Reviews might be misinterpreted, and translations could miss or alter the original sentiment.</p>    
+</div>
+
+<div id="output"></div>
+
+{% if task_done %}
+<script>
+    window.addEventListener("load", runStream());
+</script>
+{% endif %}
+<script src="{{ url_for('static', filename='js/batch_scripts.js') }}"></script>
+{% endblock %}
