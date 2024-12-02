@@ -241,3 +241,15 @@ body{
 #container {
 	flex: 1;
   }
+
+.fadeIn {
+margin: 10px;
+animation: fadeIn 2s ease-in-out;
+position: relative;
+z-index: 1;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
