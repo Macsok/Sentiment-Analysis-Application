@@ -2,6 +2,7 @@ scripts/__pycache__
 web/comm/X_replies.csv
 web/comm/YT_replies.csv
 web/comm/Amazon_replies.csv
+.idea
 venv
 myvenv
 credentials
