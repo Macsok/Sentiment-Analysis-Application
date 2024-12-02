@@ -82,7 +82,7 @@
                 <li><a href="{{ url_for('singlereview')}}" >Live review</a></li>
                 <li style="width: 150px;">Scrapping
                     <ul>
-                        <li><a href="{{ url_for('pepe')}}" >Amazon</a></li>
+                        <li><a href="{{ url_for('amazon_review')}}" >Amazon</a></li>
                         <li><a href="{{ url_for('x_review')}}" >X  &#40;Twitter&#41;</a></li>
                         <li><a href="{{ url_for('yt_review')}}" >YouTube</a></li>
                     </ul>
@@ -95,7 +95,7 @@
 
     <div id="container">
         <main>
-            <div id="content">
+            <div id="content" class="fadeIn">
 
                 {% block content %}{% endblock %}
                 
@@ -124,5 +124,5 @@
 
         </div>
     </footer>
-    
+
 </body>
