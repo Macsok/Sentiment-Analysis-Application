@@ -84,12 +84,24 @@ def x_review():
     else:
         return render_template('x_review.html')
     
+    
+@app.route('/amazon_review', methods=["GET", "POST"])
+def amazon_review():
+    if request.method == "POST":
+        url = request.form["textinput"]
+        task_done = True
+        return render_template(
+            'amazon_review.html', 
+            textinput=url, 
+            task_done=task_done)
+    else:
+        return render_template('amazon_review.html')
+    
 
 @app.route('/yt_review', methods=["GET", "POST"])
 def yt_review():
     if request.method == "POST":
         url = request.form["textinput"]
-        # https://www.youtube.com/watch?v=XqZsoesa55w&ab_channel=BabyShark-PinkfongKids%E2%80%99Songs%26Stories
         start = url.find("watch?v=") + len("watch?v=")
         end = url.find("&ab_channel")
         id = url[start:end]
