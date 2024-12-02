@@ -1,21 +1,20 @@
-# SentimentProject
-Sentiment analysing web application project.
+# Sentiment analysing web application project.
+description...
 
 # Download the repository
 Clone the repository:
 ```sh
 git clone https://github.com/Macsok/Sentiment-Analysis-Application
-cd Exploratory-Data-Analysis
+cd Sentiment-Analysis-Application
 ```
 
 # Prerequsites
-`Flask`
-`...`
+`Python=>3.10.0`
 
-# Running
-```sh
-python web/main.py
-```
+
+# Used libraries (details in requirements.txt file)
+`googletrans` `google-api-python-client` `playwright` `nltk` `asyncio` `flask` `typing` `simplejson` `pandas`
+
 
 # Using Virtualenv (on Windows)
 Use virtualenv to isolate project dependencies, ensuring no conflicts between different projects.
@@ -35,7 +34,7 @@ When activated, your shell will show the virtual environment’s name in the pro
 
 Now that the environment is active, you can install packages:
 ```sh
-pip install -r dependencies/requirements.txt
+pip install -r requirements.txt
 ```
 Once you have finished working on your project, it’s a good habit to deactivate its venv. By deactivating, you leave the virtual environment.
 ```sh
@@ -45,7 +44,36 @@ Delete the Virtual Environment (if your virtual environment is in a directory ca
 ```sh
 rm -r myvenv
 ```
+> [!NOTE]
+> You can learn more about virtual environments at: https://python.land/virtual-environments/virtualenv
 
-You can learn more about virtual environments at: https://python.land/virtual-environments/virtualenv
 
-to be completed...
+# Browser installing
+```sh
+python -m playwright install firefox
+```
+> [!TIP]
+> Alternatively you can try: npx playwright install firefox
+
+
+# Adding credentials
+To use online scrapers you need to provide credentials to your platforms. Create new directory in main project folder (Sentiment-Analysis-Application) called 'credentials'. Then add 3 files to it: AMAZON, X, YT_API_KEY. Each file should consist of:
+### AMAZON
+- email
+- password
+### X
+- username
+- password
+- email
+### YT_API_KEY
+- API key (more at: https://developers.google.com/youtube/v3)
+
+
+> [!TIP]
+> You can still use 'live review' without providing any credentials to your platforms.
+
+
+# Running
+```sh
+python run.py
+```
