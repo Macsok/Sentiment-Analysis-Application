@@ -159,7 +159,3 @@ def start_scraping_route():
         pass
         return jsonify(success=True, file=file)
     return jsonify(success=False)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
