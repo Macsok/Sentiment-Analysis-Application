@@ -1,5 +1,18 @@
 # Sentiment analysing web application project.
-description...
+This project is a comprehensive web application designed to analyze sentiment from various online sources. It leverages advanced natural language processing (NLP) techniques to determine the sentiment of text data, categorizing it as positive, negative, or neutral. The application can scrape data from multiple platforms, including Amazon for product reviews, Twitter (X) for tweets, and YouTube for video comments, using provided credentials. 
+
+The application uses several Python libraries:
+- `googletrans` for translating text to the desired language,
+- `google-api-python-client` for interacting with the YouTube API,
+- `playwright` for automated web scraping,
+- `nltk` for performing NLP tasks such as tokenization, stemming, and sentiment analysis,
+- `asyncio` for handling asynchronous operations,
+- `flask` for building the web interface,
+- `typing` for type hints,
+- `simplejson` for JSON processing,
+- `pandas` for data manipulation and analysis.
+
+The application is built with a modular architecture, making it easy to extend and maintain. It supports asynchronous operations to improve performance and responsiveness. The web interface, built with Flask, provides an intuitive user experience for interacting with the sentiment analysis features.
 
 # Download the repository
 Clone the repository:
@@ -12,8 +25,8 @@ cd Sentiment-Analysis-Application
 `Python=>3.10.0`
 
 
-# Used libraries (details in requirements.txt file)
-`googletrans` `google-api-python-client` `playwright` `nltk` `asyncio` `flask` `typing` `simplejson` `pandas`
+<!-- # Used libraries (details in requirements.txt file)
+`googletrans` `google-api-python-client` `playwright` `nltk` `asyncio` `flask` `typing` `simplejson` `pandas` -->
 
 
 # Using Virtualenv (on Windows)
@@ -58,14 +71,14 @@ python -m playwright install firefox
 
 # Adding credentials
 To use online scrapers you need to provide credentials to your platforms. Create new directory in main project folder (Sentiment-Analysis-Application) called 'credentials'. Then add 3 files to it: AMAZON, X, YT_API_KEY. Each file should consist of:
-### AMAZON
+### AMAZON:
 - email
 - password
-### X
+### X:
 - username
 - password
 - email
-### YT_API_KEY
+### YT_API_KEY:
 - API key (more at: https://developers.google.com/youtube/v3)
 
 
