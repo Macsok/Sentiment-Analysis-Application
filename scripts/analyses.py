@@ -1,8 +1,7 @@
-# pip install googletrans==4.0.0-rc1
 from googletrans import Translator
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-# import xScrape
+nltk.download('vader_lexicon')
 
 
 def analyse_text(text: str = '', translate: bool = True, skip_non_eng: bool = False):
