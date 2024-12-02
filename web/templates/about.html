@@ -70,6 +70,7 @@
   }
 
   .team {
+    width: 90%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -118,12 +119,13 @@
 
   .support {
     text-align: center;
-    margin: 40px 20px;
+    /* margin: 40px 20px; */
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: left;
     justify-content: center;
     gap: 20px;
+    margin-top: 15%;
   }
 
   .coffee-container {
@@ -178,88 +180,89 @@
     height: 20px;
   }
 
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-        .socials        
-        {
-            margin-top: 50px;
-            width:100%;
-            text-align: center;
-            background-color: #191d21;
-            display: flex;
-            flex-direction: row;
-            text-wrap: nowrap;
-            align-items: center;
-            margin-bottom: 0;
-        }
 
-        .socialdivs
-        {
-            display: flex;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            
-        }
+  .socials        
+  {
+      margin-top: 50px;
+      width:100%;
+      text-align: center;
+      background-color: #191d21;
+      display: flex;
+      flex-direction: row;
+      text-wrap: nowrap;
+      align-items: center;
+      margin-bottom: 0;
+  }
 
-        .fb
-        {
-            width: 25%;
-            padding-bottom: 20px;
-            
-            
-        }
+  .socialdivs
+  {
+      display: flex;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      
+  }
 
-        .fb:hover
-        {
-            background-color: #4668b3;
-        }
+  .fb
+  {
+      width: 25%;
+      padding-bottom: 20px;
+      
+      
+  }
 
-        .yt
-        {
-            width: 25%;
-            padding-bottom: 20px;
-            
-            
-        }
+  .fb:hover
+  {
+      background-color: #4668b3;
+  }
 
-        .yt:hover
-        {
-            background-color: #d94348;
-        }
+  .yt
+  {
+      width: 25%;
+      padding-bottom: 20px;
+  }
 
-        .tw
-        {
-            width: 25%;
-            padding-bottom: 20px;
-            
-            
-        }
+  .yt:hover
+  {
+      background-color: #d94348;
+  }
 
-        .tw:hover
-        {
-            background-color: #3095d3;
-        }
+  .tw
+  {
+      width: 25%;
+      padding-bottom: 20px;
+  }
 
-        .linkedin
-        {
-            width: 25%;
-            padding-bottom: 20px;
-            
-        }
+  .tw:hover
+  {
+      background-color: #3095d3;
+  }
 
-        .linkedin:hover
-        {
-            background-color: #0e76a8;
-        }
+  .linkedin
+  {
+      width: 25%;
+      padding-bottom: 20px;
+      
+  }
 
-        .icon-facebook:before { content: '\e800'; font-size: 40px; margin-top: 20px} /* '' */
-        .icon-youtube:before { content: '\e801'; font-size: 40px; margin-top: 20px} /* '' */
-        .icon-twitter:before { content: '\e802'; font-size: 40px; margin-top: 20px} /* '' */
-        .icon-linkedin:before { content: '\f0e1'; font-size: 40px;margin-top: 20px} /* '' */
+  .linkedin:hover
+  {
+      background-color: #0e76a8;
+  }
 
-        .icon-twitter:before { content: '\f099'; font-size: 40px; margin-top: 20px} /* '' */
-        .icon-facebook:before { content: '\f09a'; font-size: 40px; margin-top: 20px} /* '' */
-        .icon-youtube-play:before { content: '\f16a'; font-size: 40px; margin-top: 20px} /* '' */
+  .icon-facebook:before { content: '\e800'; font-size: 40px; margin-top: 20px} /* '' */
+  .icon-youtube:before { content: '\e801'; font-size: 40px; margin-top: 20px} /* '' */
+  .icon-twitter:before { content: '\e802'; font-size: 40px; margin-top: 20px} /* '' */
+  .icon-linkedin:before { content: '\f0e1'; font-size: 40px;margin-top: 20px} /* '' */
+
+  .icon-twitter:before { content: '\f099'; font-size: 40px; margin-top: 20px} /* '' */
+  .icon-facebook:before { content: '\f09a'; font-size: 40px; margin-top: 20px} /* '' */
+  .icon-youtube-play:before { content: '\f16a'; font-size: 40px; margin-top: 20px} /* '' */
 
   </style>
 
@@ -316,7 +319,7 @@
         <a class="coffee-button" href="https://buymeacoffee.com/" target="_blank">Buy Us Coffee</a>
     </div>
 
-    <a class="github-button" href="https://github.com/your-repository" target="_blank">
+    <a class="github-button" href="https://github.com/Macsok/Sentiment-Analysis-Application" target="_blank">
         <img 
             class="github-icon" 
             src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" 
@@ -326,7 +329,7 @@
     
 </div>
 
-<div class="socials">
+<!-- <div class="socials">
   <div class="socialdivs">
       <div class="fb">
           <i class="icon-facebook"></i>
@@ -342,6 +345,6 @@
       </div>
       <div style="clear:both"></div>
   </div>
-</div>
+</div> -->
 
 {% endblock %}
