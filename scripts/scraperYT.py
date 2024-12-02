@@ -129,7 +129,10 @@ def scrap_and_save(video_id: str):
     Returns:
         int: Returns 0 upon successful completion.
     """
-    print(f"Scraping comments for video ID: {video_id}")
+    start = video_id.find("watch?v=") + len("watch?v=")
+    end = video_id.find("&ab_channel") if "&ab_channel" in video_id else len(video_id)
+    id = video_id[start:end]
+    print(f"Scraping comments for video ID: '{id}'")
     global API_KEY
-    get_comments(video_id, API_KEY)
+    get_comments(id, API_KEY)
     return 0
