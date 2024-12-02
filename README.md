@@ -65,7 +65,7 @@ rm -r myvenv
 ```sh
 python -m playwright install firefox
 ```
-> [!TIP]
+> [!NOTE]
 > Alternatively you can try: npx playwright install firefox
 
 
