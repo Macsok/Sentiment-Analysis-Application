@@ -12,8 +12,8 @@ with open(credentials_file, 'r') as file:
     print(f'Signed in as {username_burner}')
 
 # Prompt the user to input the Amazon product URL for review extraction
-url = input("Enter the Amazon product URL: ")
-max_pagination = 2  # Set the maximum number of review pages to paginate through
+# url = input("Enter the Amazon product URL: ")
+max_pagination = 8  # Set the maximum number of review pages to paginate through
 
 # Function to log in to Amazon using Playwright
 async def login_to_amazon(page, username: str, password: str) -> None:
@@ -205,4 +205,4 @@ async def get_reviews(url) -> None:
         await run(playwright, url)  # Call the main function to run extraction
 
 # Run the asynchronous review extraction process
-asyncio.run(get_reviews(str(url)))
+# asyncio.run(get_reviews(str(url)))
