@@ -6,7 +6,7 @@ import os  # Import the os module to handle file paths
 
 # API_KEY = ''  # Initialize the API key as an empty string
 
-def get_comments(video_id: str, api_key: str = '', max_pages: int = 5) -> List[Dict[str, str]]:
+def get_comments(video_id: str, api_key: str = '', max_pages: int = 2) -> List[Dict[str, str]]:
     """Fetch comments from a YouTube video using the YouTube Data API v3.
 
     Args:
