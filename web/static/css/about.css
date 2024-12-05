@@ -1,0 +1,248 @@
+.box {
+padding: 0 16px;
+}
+
+.box::after, .row::after {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: auto;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.column {
+    flex: 1 1 calc(30% - 40px);
+    max-width: 300px;
+    min-width: 250px;
+}
+
+
+
+.about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+}
+
+
+.title1 {
+    color: grey;
+}
+
+
+
+.button {
+    margin-top: auto; 
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #6563FF;
+    text-align: center;
+    cursor: pointer;
+    width: 95%;
+}
+
+.button:hover {
+    background-color: #8583FF;
+}
+
+.team {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1em;
+    margin-bottom: 40px;
+    flex: 1;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.column{
+    align-items: flex-end;
+    flex: 1; 
+    
+
+}
+
+@media screen and (max-width: 650px) {
+    .column {
+    
+    display: block;
+    height: 100%;
+    align-items: stretch;
+    
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    box-shadow: 0 4px 20px 2px rgba(109, 74, 233, 0.3);
+    margin: 8px;
+    padding: 0; 
+    align-items: stretch;
+    overflow: hidden;
+    flex: 1;
+    background-color: #3f3f3f;
+    border-radius: 10px;
+    height: 600px;
+}
+
+
+
+.support {
+    text-align: center;
+    /* margin: 40px 20px; */
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15%;
+}
+
+.coffee-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    color: black;
+}
+
+.coffee-button {
+    display: inline-block;
+    background-color: #ff914d;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.coffee-button:hover {
+    background-color: #e07a3f;
+}
+
+.github-button {
+    background-color: #24292e;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s;
+}
+
+.github-button:hover {
+    background-color: #6563FF;
+    transform: scale(1.05);
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+.socials        
+{
+    margin-top: 50px;
+    width:100%;
+    text-align: center;
+    background-color: #191d21;
+    display: flex;
+    flex-direction: row;
+    text-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.socialdivs
+{
+    display: flex;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.fb
+{
+    width: 25%;
+    padding-bottom: 20px;
+    
+    
+}
+
+.fb:hover
+{
+    background-color: #4668b3;
+}
+
+.yt
+{
+    width: 25%;
+    padding-bottom: 20px;
+}
+
+.yt:hover
+{
+    background-color: #d94348;
+}
+
+.tw
+{
+    width: 25%;
+    padding-bottom: 20px;
+}
+
+.tw:hover
+{
+    background-color: #3095d3;
+}
+
+.linkedin
+{
+    width: 25%;
+    padding-bottom: 20px;
+    
+}
+
+.linkedin:hover
+{
+    background-color: #0e76a8;
+}
+
+.icon-facebook:before { content: '\e800'; font-size: 40px; margin-top: 20px} /* '' */
+.icon-youtube:before { content: '\e801'; font-size: 40px; margin-top: 20px} /* '' */
+.icon-twitter:before { content: '\e802'; font-size: 40px; margin-top: 20px} /* '' */
+.icon-linkedin:before { content: '\f0e1'; font-size: 40px;margin-top: 20px} /* '' */
+
+.icon-twitter:before { content: '\f099'; font-size: 40px; margin-top: 20px} /* '' */
+.icon-facebook:before { content: '\f09a'; font-size: 40px; margin-top: 20px} /* '' */
+.icon-youtube-play:before { content: '\f16a'; font-size: 40px; margin-top: 20px} /* '' */
