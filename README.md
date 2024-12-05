@@ -87,6 +87,10 @@ To use online scrapers you need to provide credentials to your platforms. Create
 
 
 # Running
+To run this application, ensure you have followed all the setup steps mentioned above, including cloning the repository, setting up the virtual environment, installing the required packages, and adding the necessary credentials.
+
+Once everything is set up, you can start the application by running the following command in your terminal:
 ```sh
 python run.py
 ```
+This will launch the web application, and you can access it through your web browser to start analyzing sentiments from various online sources. Visit `localhost:8000/` to see the results.
