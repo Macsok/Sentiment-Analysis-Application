@@ -93,4 +93,7 @@ Once everything is set up, you can start the application by running the followin
 ```sh
 python run.py
 ```
-This will launch the web application, and you can access it through your web browser to start analyzing sentiments from various online sources. Visit `localhost:8000/` to see the results.
+This will launch the web application, and you can access it through your web browser to start analyzing sentiments from various online sources. 
+
+> [!TIP]
+> Visit `localhost:8000/` to see the results.
