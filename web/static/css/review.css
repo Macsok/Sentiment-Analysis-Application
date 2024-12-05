@@ -1,4 +1,4 @@
-/* Style for the page container */
+
 body {
     /* font-family: Arial, sans-serif;
     background-color: #f5f7fa;
@@ -9,14 +9,12 @@ body {
     position: relative;
 }
 
-/* Styling the main header */
 content h1 {
     color: #fff;
     text-align: center;
     font-size: 2rem;
 }
 
-/* Style for the textarea */
 textarea {
     width: 98%;
     min-height: 100px;
@@ -45,7 +43,6 @@ textarea:focus {
     line-height: 20px;
 }
 
-/* Style for the submit button */
 button {
     background-color: #4CAF50;
     color: white;
@@ -64,7 +61,6 @@ button:hover {
     background-color: #326b35;
 }
 
-/* Progress bar container styling */
 .progress-container {
     display: flex;
     gap: 5vw;
@@ -73,7 +69,6 @@ button:hover {
     align-items: flex-end;
 }
 
-/* Styling for each progress bar */
 .progress-bar {
     width: 100px;
     height: 300px;
@@ -84,7 +79,6 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Dynamic fill for each progress bar */
 .progress-bar-fill {
     width: 100%;
     height: 0;
@@ -100,7 +94,6 @@ button:hover {
     transition: height 2s ease-out;
 }
 
-/* Language box style */
 .language-box {
     width: 90%;
     margin: auto;
@@ -115,7 +108,6 @@ button:hover {
     color: white;
 }
 
-/* Sentiment box styles */
 .sentiment-box {
     width: 50%;
     margin: auto;
@@ -145,7 +137,6 @@ button:hover {
     color: white;
 }
 
-/* Colors for each sentiment */
 .positive { 
     background-color: #4aa54d; 
     color: #333;
