@@ -61,7 +61,7 @@ rm -r myvenv
 > You can learn more about virtual environments at: https://python.land/virtual-environments/virtualenv
 
 
-# Browser installing
+# Browser installation
 ```sh
 python -m playwright install firefox
 ```
