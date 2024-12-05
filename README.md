@@ -96,4 +96,4 @@ python run.py
 This will launch the web application, and you can access it through your web browser to start analyzing sentiments from various online sources. 
 
 > [!TIP]
-> Visit `localhost:8000/` to see the results.
+> Visit `localhost:5000/` to see the results.
