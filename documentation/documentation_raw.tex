@@ -1,0 +1,602 @@
+\documentclass[a4paper]{article}
+% \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+%-----------
+\usepackage{float}
+\usepackage{multicol}
+\usepackage[polish,english]{babel}
+
+\title{Exploratory Data Analysis - report}
+\author{github.com/Macsok}
+\date{December 2024}
+
+\begin{document}
+
+\begin{titlepage}
+   \begin{center}
+        \vspace*{2cm}
+
+        \Huge
+        \textbf{Sentiment Analysing Web Application Project}
+        \vspace{0.5cm}
+
+        \LARGE
+        Data Investigation Report
+        \vspace{5.5cm}
+       
+        \textbf{github.com/Macsok/Sentiment-Analysis-Application}
+
+        \vspace{10cm}
+        Konrad Bąchór, Kuba Herka, Maciej Sokołowski
+
+        \Large
+        \vfill
+        December 2024   
+   \end{center}
+\end{titlepage}
+%----------------
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This project is a comprehensive web application designed to analyze sentiment from various online sources. It leverages advanced natural language processing (NLP) techniques to determine the sentiment of text data, categorizing it as positive, negative, or neutral. The application can scrape data from multiple platforms, including Amazon for product reviews, Twitter (X) for tweets, and YouTube for video comments, using provided credentials.
+
+\section{Project Structure}
+The project is organized into several directories and files, each serving a specific purpose. Below is an overview of the project structure:
+
+\begin{verbatim}
+.gitignore
+credentials/
+    AMAZON
+    X
+    YT_API_KEY
+documentation.txt
+LICENSE
+myenv/
+    Include/
+        site/
+    Lib/
+        site-packages/
+    pyvenv.cfg
+    Scripts/
+        activate
+        activate.bat
+        Activate.ps1
+        chardetect.exe
+        deactivate.bat
+        f2py.exe
+        flask.exe
+README.md
+requirements.txt
+run.py
+scripts/
+    __pycache__/
+    analyses.py
+    scraperAmazon.py
+    scraperX.py
+    scraperYT.py
+    sseStream.py
+testing/
+    scrapped_examples/
+    script_testing.ipynb
+    yielding.ipynb
+web/
+    __pycache__/
+    comm/
+    main.py
+    static/
+    templates/
+\end{verbatim}
+
+\section{Prerequisites}
+To run this project, you need the following software and libraries installed on your system:
+\begin{itemize}
+    \item Python 3.10.0 or higher
+    \item Virtualenv
+    \item Playwright
+    \item YouTube Data API Key
+\end{itemize}
+
+\section{Installation}
+\subsection{Clone the Repository}
+First, clone the repository from GitHub and navigate to the project directory:
+\begin{lstlisting}[language=bash]
+git clone https://github.com/Macsok/Sentiment-Analysis-Application
+cd Sentiment-Analysis-Application
+\end{lstlisting}
+
+\subsection{Using Virtualenv (on Windows)}
+Use virtualenv to isolate project dependencies, ensuring no conflicts between different projects.
+
+First, install Virtualenv if you haven't already:
+\begin{lstlisting}[language=bash]
+pip install virtualenv
+\end{lstlisting}
+
+Navigate to the main project directory and create a new virtual environment:
+\begin{lstlisting}[language=bash]
+python -m virtualenv myvenv
+\end{lstlisting}
+
+Activate the Virtual Environment:
+\begin{lstlisting}[language=bash]
+python -m source myenv/Scripts/activate
+\end{lstlisting}
+
+When activated, your shell will show the virtual environment’s name in the prompt.
+
+Now that the environment is active, you can install packages:
+\begin{lstlisting}[language=bash]
+pip install -r requirements.txt
+\end{lstlisting}
+
+Once you have finished working on your project, it’s a good habit to deactivate its venv. By deactivating, you leave the virtual environment.
+\begin{lstlisting}[language=bash]
+deactivate
+\end{lstlisting}
+
+Delete the Virtual Environment (if your virtual environment is in a directory called 'venv'):
+\begin{lstlisting}[language=bash]
+rm -r myvenv
+\end{lstlisting}
+
+\section{Browser Installation}
+To use Playwright for web scraping, you need to install a browser. The following command installs Firefox:
+\begin{lstlisting}[language=bash]
+python -m playwright install firefox
+\end{lstlisting}
+
+Alternatively, you can use npm to install the browser:
+\begin{lstlisting}[language=bash]
+npx playwright install firefox
+\end{lstlisting}
+
+\section{Adding Credentials}
+To use online scrapers, you need to provide credentials to your platforms. Create a new directory in the main project folder (Sentiment-Analysis-Application) called 'credentials'. Then add 3 files to it: AMAZON, X, YT_API_KEY. Each file should consist of:
+
+\subsection{AMAZON}
+\begin{itemize}
+    \item email
+    \item password
+\end{itemize}
+
+\subsection{X}
+\begin{itemize}
+    \item username
+    \item password
+    \item email
+\end{itemize}
+
+\subsection{YT\_API\_KEY}
+\begin{itemize}
+    \item API key (more at: \url{https://developers.google.com/youtube/v3})
+\end{itemize}
+
+\section{Running the Application}
+To run the application, execute the following command:
+\begin{lstlisting}[language=bash]
+python run.py
+\end{lstlisting}
+
+\section{Amazon Review Scraper Documentation}
+\subsection{Prerequisites}
+\begin{itemize}
+    \item Python 3.10.0 or higher
+    \item Playwright
+\end{itemize}
+
+\subsection{How It Works}
+\subsubsection{Amazon Login}
+The scraper logs into Amazon using the provided credentials.
+
+\subsubsection{Review Extraction}
+The scraper extracts reviews from the specified Amazon product page.
+
+\subsubsection{Data Cleaning}
+The extracted data is cleaned to remove any unnecessary information.
+
+\subsubsection{CSV Export}
+The cleaned data is exported to a CSV file.
+
+\subsection{Code Structure}
+The Amazon scraper is implemented in the \texttt{scraperAmazon.py} file. The main functions are:
+\begin{itemize}
+    \item \texttt{get\_reviews(url: str) -> None}
+    \item \texttt{login\_to\_amazon(page, username: str, password: str) -> None}
+    \item \texttt{extract\_data(amazon\_reviews\_ratings: list, page) -> list}
+    \item \texttt{run(playwright, url: str) -> None}
+    \item \texttt{clean\_data(data: str) -> str | None}
+    \item \texttt{save\_data\_to\_csv(reviews\_data: list, filename: str) -> None}
+\end{itemize}
+
+\subsection{Summary of Code Flow}
+The scraper logs into Amazon, extracts reviews, cleans the data, and exports it to a CSV file.
+
+\subsection{Example Usage}
+\begin{lstlisting}[language=python]
+from scraperAmazon import get_reviews
+
+url = "https://www.amazon.com/product-reviews/B08N5WRWNW"
+get_reviews(url)
+\end{lstlisting}
+
+\subsection{Important Notes}
+Make sure to provide valid Amazon credentials in the \texttt{credentials/AMAZON} file.
+
+\section{X.com Reply Scraper Documentation}
+\subsection{Prerequisites}
+\begin{itemize}
+    \item Python 3.10.0 or higher
+    \item Playwright
+\end{itemize}
+
+\subsection{How It Works}
+\subsubsection{Login to X.com}
+The scraper logs into X.com using the provided credentials.
+
+\subsubsection{Reply Extraction}
+The scraper extracts replies from the specified X.com post.
+
+\subsubsection{Data Cleaning}
+The extracted data is cleaned to remove any unnecessary information.
+
+\subsection{Code Structure}
+The X.com scraper is implemented in the \texttt{scraperX.py} file. The main functions are:
+\begin{itemize}
+    \item \texttt{login\_to\_x(page, username: str, password: str) -> None}
+    \item \texttt{extract\_replies(x\_replies\_ratings: list, page) -> list}
+    \item \texttt{run(playwright, url: str) -> None}
+    \item \texttt{clean\_data(data: str) -> str | None}
+    \item \texttt{save\_data\_to\_csv(replies\_data: list, filename: str) -> None}
+\end{itemize}
+
+\subsection{Summary of Code Flow}
+The scraper logs into X.com, extracts replies, cleans the data, and exports it to a CSV file.
+
+\subsection{Example Usage}
+\begin{lstlisting}[language=python]
+from scraperX import get_replies
+
+url = "https://www.x.com/post/1234567890"
+get_replies(url)
+\end{lstlisting}
+
+\subsection{Important Notes}
+Make sure to provide valid X.com credentials in the \texttt{credentials/X} file.
+
+\section{YouTube Comment Scraper Documentation}
+\subsection{Prerequisites}
+\begin{itemize}
+    \item Python 3.10.0 or higher
+    \item YouTube Data API Key
+\end{itemize}
+
+\subsection{How It Works}
+\subsubsection{API Key}
+The scraper uses the YouTube Data API key to access video comments.
+
+\subsubsection{Comment Extraction}
+The scraper extracts comments from the specified YouTube video.
+
+\subsubsection{Data Cleaning}
+The extracted data is cleaned to remove any unnecessary information.
+
+\subsection{Code Structure}
+The YouTube scraper is implemented in the \texttt{scraperYT.py} file. The main functions are:
+\begin{itemize}
+    \item \texttt{get\_comments(video\_id: str) -> None}
+    \item \texttt{clean\_data(data: str) -> str | None}
+    \item \texttt{save\_data\_to\_csv(comments\_data: list, filename: str) -> None}
+\end{itemize}
+
+\subsection{Summary of Code Flow}
+The scraper uses the YouTube Data API key to access video comments, cleans the data, and exports it to a CSV file.
+
+\subsection{Example Usage}
+\begin{lstlisting}[language=python]
+from scraperYT import get_comments
+
+video_id = "dQw4w9WgXcQ"
+get_comments(video_id)
+\end{lstlisting}
+
+\subsection{Important Notes}
+Make sure to provide a valid YouTube Data API key in the \texttt{credentials/YT\_API\_KEY} file.
+
+\section{Web Interface}
+The web interface is built with Flask and provides an intuitive user experience for interacting with the sentiment analysis features.
+
+\subsection{Routes}
+The main routes in the web interface are:
+\begin{itemize}
+    \item \texttt{/} - Home page
+    \item \texttt{/about} - About page
+    \item \texttt{/pepe} - Pepe page
+    \item \texttt{/singlereview} - Single review analysis
+    \item \texttt{/amazon\_review} - Amazon review scraping
+    \item \texttt{/yt\_review} - YouTube review scraping
+    \item \texttt{/start\_scraping} - Start the scraping process
+\end{itemize}
+
+\subsection{Example Route Implementation}
+The following is an example implementation of the \texttt{/singlereview} route:
+\begin{lstlisting}[language=python]
+@app.route("/singlereview", methods=["GET", "POST"])
+def singlereview():
+    """Handle single review analysis."""
+    if request.method == "POST":
+        start = time.time()
+        text = request.form["textinput"]
+        print(text)
+        scores = analyses.default_analysis(text)
+        sentiment = analyses.get_sentiment(scores[3])
+        end = time.time()
+        adbreak = 15
+        wait_time = max(0, (adbreak - (end - start)) * 1000)
+        return render_template(
+            "singlereview.html", 
+            textinput=text, 
+            sentiment=sentiment, 
+            wait_time=wait_time
+        )
+    else:
+        return render_template("singlereview.html")
+\end{lstlisting}
+
+\section{Testing}
+The \texttt{testing/} directory contains various testing-related files, including:
+\begin{itemize}
+    \item \texttt{scrapped\_examples/} - Examples of scrapped data
+    \item \texttt{script\_testing.ipynb} - Jupyter notebook for testing scripts
+    \item \texttt{yielding.ipynb} - Jupyter notebook for testing yielding functions
+\end{itemize}
+
+\section{Conclusion}
+This documentation provides an overview of the Sentiment Analysis Application, including its structure, installation steps, and usage. For more detailed information, refer to the individual script files and the \texttt{README.md} and \texttt{documentation.txt} files.
+
+\section{Appendix}
+\subsection{Detailed Code Examples}
+\begin{verbatim}
+def analyse_text(text: str = '', translate: bool = True, skip_non_eng: bool = False):
+    """
+    Analyzes the sentiment of a provided text. Translates any non-English 
+    text by default.
+    
+    Returns:
+        - 1 if language detection fails.
+        - 2 if language translation fails.
+        - 0 for text that was not in English and was skipped.
+    
+    Returns sentiment scores (positive, negative, neutral, compound),
+    detected language, and (if applicable) translated text.
+    """
+    # Default return
+    if text == '':
+        return ''
+
+    # Creating objects to analyze and translate
+    sia = SentimentIntensityAnalyzer()
+    translator = Translator()
+
+    # Language detection
+    try:
+        language = translator.detect(text).lang
+    except Exception:
+        return 1
+
+    # Skip non-English texts
+    if skip_non_eng and language != 'en':
+        return 0
+
+    # Skipping this part if not translating -> better performance
+    if translate:
+        if language != 'en':
+            # Translating detected language to English
+            try:
+                text = translator.translate(text, src=language, dest='en').text
+            except Exception:
+                return 2
+        # Scores for translated text
+        scores = sia.polarity_scores(text)
+        return scores['pos'], scores['neg'], scores['neu'], scores['compound'], language, text
+
+    # Sentiment analysis
+    scores = sia.polarity_scores(text)
+    
+    # Return results
+    return scores['pos'], scores['neg'], scores['neu'], scores['compound'], language, text
+\end{verbatim}
+
+\subsection{Advanced Configuration}
+\begin{itemize}
+    \item How to configure the application for different environments (development, testing, production)
+    \item How to set up logging and monitoring
+\end{itemize}
+
+\subsection{Troubleshooting}
+\begin{itemize}
+    \item Common issues and their solutions
+    \item How to debug the application
+\end{itemize}
+
+\subsection{Future Work}
+\begin{itemize}
+    \item Planned features and improvements
+    \item How to contribute to the project
+\end{itemize}
+
+\section{Detailed Code Examples}
+\subsection{Amazon Review Scraper}
+The Amazon Review Scraper is designed to log into Amazon, extract reviews from a specified product page, clean the data, and export it to a CSV file. Below is a detailed example of how to use the scraper:
+
+\begin{lstlisting}[language=python]
+from scraperAmazon import get_reviews
+
+# URL of the Amazon product page
+url = "https://www.amazon.com/product-reviews/B08N5WRWNW"
+
+# Call the function to get reviews
+get_reviews(url)
+\end{lstlisting}
+
+\subsection{X.com Reply Scraper}
+The X.com Reply Scraper logs into X.com, extracts replies from a specified post, cleans the data, and exports it to a CSV file. Below is a detailed example of how to use the scraper:
+
+\begin{lstlisting}[language=python]
+from scraperX import get_replies
+
+# URL of the X.com post
+url = "https://www.x.com/post/1234567890"
+
+# Call the function to get replies
+get_replies(url)
+\end{lstlisting}
+
+\subsection{YouTube Comment Scraper}
+The YouTube Comment Scraper uses the YouTube Data API key to access video comments, cleans the data, and exports it to a CSV file. Below is a detailed example of how to use the scraper:
+
+\begin{lstlisting}[language=python]
+from scraperYT import get_comments
+
+# YouTube video ID
+video_id = "dQw4w9WgXcQ"
+
+# Call the function to get comments
+get_comments(video_id)
+\end{lstlisting}
+
+\subsection{Web Interface Routes}
+The web interface is built with Flask and provides various routes for interacting with the sentiment analysis features. Below is a detailed example of the \texttt{/singlereview} route implementation:
+
+\begin{lstlisting}[language=python]
+@app.route("/singlereview", methods=["GET", "POST"])
+def singlereview():
+    """Handle single review analysis."""
+    if request.method == "POST":
+        start = time.time()
+        text = request.form["textinput"]
+        print(text)
+        scores = analyses.default_analysis(text)
+        sentiment = analyses.get_sentiment(scores[3])
+        end = time.time()
+        adbreak = 15
+        wait_time = max(0, (adbreak - (end - start)) * 1000)
+        return render_template(
+            "singlereview.html", 
+            textinput=text, 
+            sentiment=sentiment, 
+            positive=scores[0] * 100, 
+            negative=scores[1] * 100, 
+            neutral=scores[2] * 100, 
+            language=scores[4].upper(), 
+            text=scores[5], 
+            wait_time=wait_time
+        )
+    else:
+        return render_template("singlereview.html", wait_time=0)
+\end{lstlisting}
+
+\section{Advanced Configuration}
+\subsection{Configuring for Different Environments}
+To configure the application for different environments (development, testing, production), you can use environment variables and configuration files. Below is an example of how to set up different configurations:
+
+\begin{lstlisting}[language=python]
+import os
+
+class Config:
+    DEBUG = False
+    TESTING = False
+    DATABASE_URI = 'sqlite://:memory:'
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+    DATABASE_URI = 'sqlite:///dev.db'
+
+class TestingConfig(Config):
+    TESTING = True
+    DATABASE_URI = 'sqlite:///test.db'
+
+class ProductionConfig(Config):
+    DATABASE_URI = 'sqlite:///prod.db'
+
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    return app
+
+app = create_app(os.getenv('FLASK_CONFIG') or 'config.DevelopmentConfig')
+\end{lstlisting}
+
+\subsection{Setting Up Logging and Monitoring}
+To set up logging and monitoring for the application, you can use the built-in logging module and third-party services like Sentry. Below is an example of how to set up logging:
+
+\begin{lstlisting}[language=python]
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Set up logging
+handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
+
+# Example usage
+@app.route('/example')
+def example():
+    app.logger.info('Example route accessed')
+    return 'Example route'
+\end{lstlisting}
+
+\section{Troubleshooting}
+\subsection{Common Issues and Solutions}
+Here are some common issues you might encounter while using the application and their solutions:
+
+\begin{itemize}
+    \item \textbf{Issue:} Virtual environment activation fails.
+    \item \textbf{Solution:} Ensure you are using the correct command for your operating system. On Windows, use \texttt{myenv\textbackslash Scripts\textbackslash activate}. On macOS/Linux, use \texttt{source myenv/bin/activate}.
+    
+    \item \textbf{Issue:} Browser installation fails.
+    \item \textbf{Solution:} Ensure you have the necessary permissions to install software on your system. Try running the command with elevated privileges (e.g., using \texttt{sudo} on macOS/Linux).
+    
+    \item \textbf{Issue:} Credentials not found.
+    \item \textbf{Solution:} Ensure you have created the \texttt{credentials} directory and added the necessary files (AMAZON, X, YT\_API\_KEY) with the correct format.
+\end{itemize}
+
+\subsection{Debugging the Application}
+To debug the application, you can use the built-in debugging tools provided by Flask and Python. Below are some tips for debugging:
+
+\begin{itemize}
+    \item Use the \texttt{debug} mode in Flask to get detailed error messages and stack traces.
+    \item Use breakpoints and the \texttt{pdb} module to step through your code and inspect variables.
+    \item Check the application logs for any error messages or warnings.
+\end{itemize}
+
+\section{Future Work}
+\subsection{Planned Features and Improvements}
+Here are some planned features and improvements for the Sentiment Analysis Application:
+
+\begin{itemize}
+    \item Add support for more platforms (e.g., Facebook, Instagram).
+    \item Improve the accuracy of sentiment analysis by using more advanced NLP models.
+    \item Add a user authentication system to restrict access to certain features.
+    \item Implement a dashboard for visualizing sentiment analysis results.
+\end{itemize}
+
+\subsection{How to Contribute to the Project}
+If you would like to contribute to the project, please follow these steps:
+
+\begin{itemize}
+    \item Fork the repository on GitHub.
+    \item Create a new branch for your feature or bug fix.
+    \item Make your changes and commit them with descriptive commit messages.
+    \item Push your changes to your forked repository.
+    \item Create a pull request to merge your changes into the main repository.
+\end{itemize}
+
+\end{document}
