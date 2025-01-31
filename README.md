@@ -14,6 +14,21 @@ The application uses several Python libraries:
 
 The application is built with a modular architecture, making it easy to extend and maintain. It supports asynchronous operations to improve performance and responsiveness. The web interface, built with Flask, provides an intuitive user experience for interacting with the sentiment analysis features.
 
+# Project overview
+
+<p align="center">
+    <img src="./static/home.png" alt="home page" width="40%" style="margin-right: 10px;"/>
+    <img src="./static/about.png" alt="login page" width="40%" style="margin-left: 10px;"/>
+</p>
+<p align="center">
+   <img src="./static/single01.png" alt="single review 01" width="40%" style="margin-right: 10px;"/>
+   <img src="./static/batch02.png" alt="batch review 01" width="40%" style="margin-left: 10px;"/>
+</p>
+<p align="center">
+   <img src="./static/single02.png" alt="sinlge review 02" width="40%" style="margin-right: 10px;"/>
+   <img src="./static/batch01.png" alt="batch review 02" width="40%" style="margin-left: 10px;"/>
+</p>
+
 # Download the repository
 Clone the repository:
 ```sh
