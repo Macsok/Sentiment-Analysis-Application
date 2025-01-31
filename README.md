@@ -23,10 +23,12 @@ The application is built with a modular architecture, making it easy to extend a
 </p>
 <p align="center">
    <img src="./static/single01.png" alt="single review 01" width="40%"/>
+   &nbsp;&nbsp;&nbsp;&nbsp;
    <img src="./static/batch02.png" alt="batch review 01" width="40%"/>
 </p>
 <p align="center">
    <img src="./static/single02.png" alt="single review 02" width="40%"/>
+   &nbsp;&nbsp;&nbsp;&nbsp;
    <img src="./static/batch01.png" alt="batch review 02" width="40%"/>
 </p>
 
