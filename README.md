@@ -17,8 +17,8 @@ The application is built with a modular architecture, making it easy to extend a
 # Project overview
 
 <p align="center">
-    <img src="./static/home.png" alt="home page" width="40%" style="margin-right: 10px;"/>
-    <img src="./static/about.png" alt="login page" width="40%" style="margin-left: 10px;"/>
+    <img src="./static/home.png" alt="home page" width="40%" style="margin-right: 2%;"/>
+    <img src="./static/about.png" alt="login page" width="40%" style="margin-left: 2%;"/>
 </p>
 <p align="center">
    <img src="./static/single01.png" alt="single review 01" width="40%" style="margin-right: 10px;"/>
