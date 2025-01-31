@@ -18,7 +18,8 @@ The application is built with a modular architecture, making it easy to extend a
 
 <p align="center">
     <img src="./static/home.png" alt="home page" width="40%"/>
-    &nbsp;&nbsp;&nbsp;&nbsp;  
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    repair
     <img src="./static/about.png" alt="login page" width="40%"/>
 </p>
 <p align="center">
