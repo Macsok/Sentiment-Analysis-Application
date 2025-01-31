@@ -17,16 +17,17 @@ The application is built with a modular architecture, making it easy to extend a
 # Project overview
 
 <p align="center">
-    <img src="./static/home.png" alt="home page" width="40%" style="margin-right: 8vw;"/>
-    <img src="./static/about.png" alt="login page" width="40%" style="margin-left: 8vW;"/>
+    <img src="./static/home.png" alt="home page" width="40%"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    <img src="./static/about.png" alt="login page" width="40%"/>
 </p>
 <p align="center">
-   <img src="./static/single01.png" alt="single review 01" width="40%" style="margin-right: 10px;"/>
-   <img src="./static/batch02.png" alt="batch review 01" width="40%" style="margin-left: 10px;"/>
+   <img src="./static/single01.png" alt="single review 01" width="40%"/>
+   <img src="./static/batch02.png" alt="batch review 01" width="40%"/>
 </p>
 <p align="center">
-   <img src="./static/single02.png" alt="sinlge review 02" width="40%" style="margin-right: 10px;"/>
-   <img src="./static/batch01.png" alt="batch review 02" width="40%" style="margin-left: 10px;"/>
+   <img src="./static/single02.png" alt="single review 02" width="40%"/>
+   <img src="./static/batch01.png" alt="batch review 02" width="40%"/>
 </p>
 
 # Download the repository
